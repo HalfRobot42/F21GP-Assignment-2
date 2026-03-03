@@ -1,0 +1,42 @@
+{
+  "name": "com.unity.collab-proxy",
+  "displayName": "Unity Version Control",
+  "version": "2.11.4",
+  "unity": "2021.3",
+  "unityRelease": "0f1",
+  "description": "The package gives you the ability to use Unity Version Control in the Unity editor. To use Unity Version Control, a subscription is required. Learn more about how you can get started for free by visiting https://unity.com/solutions/version-control",
+  "dependencies": {},
+  "keywords": [
+    "backup",
+    "cloud",
+    "collab",
+    "collaborate",
+    "collaboration",
+    "control",
+    "devops",
+    "plastic",
+    "plasticscm",
+    "source",
+    "team",
+    "teams",
+    "version",
+    "vcs",
+    "uvcs"
+  ],
+  "category": "Editor",
+  "relatedPackages": {
+    "com.unity.collab-proxy.tests": "2.11.4"
+  },
+  "_upm": {
+    "changelog": "### Fixed\n\n- Fixed deprecated instanceID API usages for Unity 6.5."
+  },
+  "upmCi": {
+    "footprint": "458ee15c4e0612fb9d501386af621e1797f20823"
+  },
+  "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.collab-proxy@2.11/manual/index.html",
+  "repository": {
+    "url": "https://github.cds.internal.unity3d.com/unity/com.unity.cloud.collaborate.git",
+    "type": "git",
+    "revision": "164a710206077e1184a134f18801dae560fdf28a"
+  }
+}

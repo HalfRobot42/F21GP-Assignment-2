@@ -10,6 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3607729656140724062}
   - component: {fileID: 5769810522326270694}
+<<<<<<< Updated upstream
+=======
+  - component: {fileID: 7519497550339945098}
+>>>>>>> Stashed changes
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -83,6 +87,24 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+<<<<<<< Updated upstream
+=======
+--- !u!114 &7519497550339945098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6169465789912202102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d084e302e64884af902e181c8360db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensX: 0
+  sensY: 0
+  orientation: {fileID: 0}
+>>>>>>> Stashed changes
 --- !u!1 &7650144302977996031
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,6 +114,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6347460139173919596}
+<<<<<<< Updated upstream
+=======
+  - component: {fileID: 7611810344755584411}
+>>>>>>> Stashed changes
   m_Layer: 0
   m_Name: CamHolder
   m_TagString: Untagged
@@ -115,3 +141,19 @@ Transform:
   - {fileID: 3607729656140724062}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< Updated upstream
+=======
+--- !u!114 &7611810344755584411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7650144302977996031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1697ffd744d21aea4b8f9e3fd65d6558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraPosition: {fileID: 0}
+>>>>>>> Stashed changes

@@ -73,7 +73,10 @@ GameObject:
   - component: {fileID: 4861568626663289989}
   - component: {fileID: 4809517859682353841}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   - component: {fileID: 2455354293451368354}
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
   m_Layer: 0
@@ -93,7 +96,11 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_LocalPosition: {x: 0, y: 0, z: 0}
+=======
+  m_LocalPosition: {x: -3.08, y: 0, z: -48.99}
+>>>>>>> Stashed changes
 =======
   m_LocalPosition: {x: -3.08, y: 0, z: -48.99}
 >>>>>>> Stashed changes
@@ -133,6 +140,7 @@ Rigidbody:
   m_Constraints: 0
   m_CollisionDetection: 1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 --- !u!114 &2455354293451368354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,6 +163,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   orientation: {fileID: 4569620289919356744}
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 --- !u!1 &2368088760220743929

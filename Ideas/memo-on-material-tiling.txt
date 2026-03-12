@@ -1,0 +1,4 @@
+32*32 pixel = 0.4 tiling = 2.5*2.5     metres size
+16*16 pixel = 1.6 tiling = 0.625*0.625 metres size
+
+0.625/16 = 0.0390625 metres is the smallest "unit"/"voxel"

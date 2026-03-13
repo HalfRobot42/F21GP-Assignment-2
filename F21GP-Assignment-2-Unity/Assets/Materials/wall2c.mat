@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: wall2
+  m_Name: wall2c
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_Parent: {fileID: 2100000, guid: c85924268a0ce7f4db4e9e6ee4df94af, type: 2}
+  m_Parent: {fileID: 2100000, guid: be9b8023f0a92c042946525532015ed5, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -26,11 +26,11 @@ Material:
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 0.4, y: 0.4}
-        m_Offset: {x: -0.11, y: 0.17}
+        m_Offset: {x: -1, y: 0.17}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 4aebea2f089d9f94f84f567054a0e0e6, type: 3}
         m_Scale: {x: 0.4, y: 0.4}
-        m_Offset: {x: -0.11, y: 0.17}
+        m_Offset: {x: -1, y: 0.17}
     m_Ints: []
     m_Floats:
     - _Glossiness: 0.2

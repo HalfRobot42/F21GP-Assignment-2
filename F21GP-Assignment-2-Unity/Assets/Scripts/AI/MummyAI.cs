@@ -22,10 +22,12 @@ public class MummyAI : MonoBehaviour
 
     public GameObject Spell;
 
+    public string areaName; // default area to wander around
+
     private bool walking = true; // true if walking
     private bool grasp = false; // true if grasping
 
-    private bool previousGrasp; // store the value of Grasp in the previous update, needed to transition between idle animation and grasp animation
+    private bool previousGrasp = false; // store the value of Grasp in the previous update, needed to transition between idle animation and grasp animation
 
     private float swaySpeed = 2.5F;
     private bool swayDir = true; // keep track of swaying direction
@@ -42,7 +44,7 @@ public class MummyAI : MonoBehaviour
 
 
     // variables for wandering (idle behaviour)
-    private float wanderRadius = 5F;
+    private float wanderRadius = 2.5F;
     private float wanderTargetError = 0.5F;
     private int waitCount;
     private bool waiting = false;
@@ -56,14 +58,20 @@ public class MummyAI : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
 
         // set new random target position
-        currentTarget = FindRandomPosition();
-        navMeshAgent.SetDestination(currentTarget);
+        //walking = true;
+        //currentTarget = FindRandomPosition();
+        //navMeshAgent.SetDestination(currentTarget);
     }
 
 
     private void Start()
     {
         Spell.SetActive(false); // disable spell effect on start
+
+        // set new random target position
+        walking = true;
+        currentTarget = FindRandomPosition();
+        navMeshAgent.SetDestination(currentTarget);
     }
 
 
@@ -125,9 +133,9 @@ public class MummyAI : MonoBehaviour
         Vector3 randomPoint = Random.insideUnitSphere * wanderRadius;
         randomPoint += transform.position;
 
-        // get the closest postion on the navmesh to this point
+        // get the closest postion on the set area navmesh to this point
         NavMeshHit queryReturn;
-        NavMesh.SamplePosition(randomPoint, out queryReturn, wanderRadius, 1);
+        NavMesh.SamplePosition(randomPoint, out queryReturn, wanderRadius, 1 << NavMesh.GetAreaFromName(areaName));
         Vector3 finalPosition = queryReturn.position;
 
         return finalPosition;
@@ -163,11 +171,11 @@ public class MummyAI : MonoBehaviour
 
 
         // deturmine direction to sway in (euler angles and loop around from 0-360)
-        if (RightArm.transform.eulerAngles.z > swayRange && RightArm.transform.eulerAngles.z < 180) // if z angle is between range and 180, start sway "down"
+        if (RightArm.transform.localEulerAngles.z > swayRange && RightArm.transform.localEulerAngles.z < 180) // if z angle is between range and 180, start sway "down"
         {
             swayDir = true;
         }
-        else if (RightArm.transform.eulerAngles.z < (360-swayRange) && RightArm.transform.eulerAngles.z > 180) // if z angle is between -range and 180, start sway "up"
+        else if (RightArm.transform.localEulerAngles.z < (360-swayRange) && RightArm.transform.localEulerAngles.z > 180) // if z angle is between -range and 180, start sway "up"
         {
             swayDir = false;
         }
@@ -192,11 +200,11 @@ public class MummyAI : MonoBehaviour
             }
 
             // determine "direction" to walk in
-            if (RightLeg.transform.eulerAngles.z > walkRange && RightLeg.transform.eulerAngles.z < 180) // if too high out of range, move "down"
+            if (RightLeg.transform.localEulerAngles.z > walkRange && RightLeg.transform.localEulerAngles.z < 180) // if too high out of range, move "down"
             {
                 walkDir = false; // this is arbitrery, but it remains consistent
             }
-            else if (RightLeg.transform.eulerAngles.z < (360 - walkRange) && RightLeg.transform.eulerAngles.z > 180) // if too low out of range, move "up"
+            else if (RightLeg.transform.localEulerAngles.z < (360 - walkRange) && RightLeg.transform.localEulerAngles.z > 180) // if too low out of range, move "up"
             {
                 walkDir = true;
             }

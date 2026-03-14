@@ -59,11 +59,11 @@ public class BatAI : MonoBehaviour
 
 
         // deturmine direction to flap in (euler angles and loop around from 0-360)
-        if (WingRight.transform.eulerAngles.z > flapTopRange && WingRight.transform.eulerAngles.z < 180) // if z angle is between range and 180, start flap down
+        if (WingRight.transform.localEulerAngles.z > flapTopRange && WingRight.transform.localEulerAngles.z < 180) // if z angle is between range and 180, start flap down
         {
             flapDir = false;
         }
-        else if (WingRight.transform.eulerAngles.z < flapBottomRange && WingRight.transform.eulerAngles.z > 180) // if z angle is between -range and 180, start flap up
+        else if (WingRight.transform.localEulerAngles.z < flapBottomRange && WingRight.transform.localEulerAngles.z > 180) // if z angle is between -range and 180, start flap up
         {
             flapDir = true;
         }

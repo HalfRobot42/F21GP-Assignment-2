@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LizardAI : MonoBehaviour
 {
@@ -14,11 +15,14 @@ public class LizardAI : MonoBehaviour
     public GameObject LegFrontLeft;
     public GameObject TopJaw;
     public GameObject BottomJaw;
-    public bool Walking; // fix this later
-    public bool Bite; // also fix
 
+    public string areaName; // default area to wander around
 
-    private bool previousBite; // store the value of bite in the previous update, needed to transition between idle animation and bite animation
+    // stores if certain animations are active
+    private bool walking = false; 
+    private bool bite = false; 
+
+    private bool previousBite = false; // store the value of bite in the previous update, needed to transition between idle animation and bite animation
 
     private float waveSpeed = 25F; // speed at which to wave the tail
     private bool waveDir = true; // keep track of waving direction (direction is arbitrary, but consistent)
@@ -37,7 +41,106 @@ public class LizardAI : MonoBehaviour
     private float walkRange = 10F;
 
 
-    void Update()
+    // self components
+    private NavMeshAgent navMeshAgent;
+    private Rigidbody rigidBody;
+
+
+    // variables for wandering (idle behaviour)
+    private float wanderRadius = 10F;//2.5F;
+    private float wanderTargetError = 0.5F;
+    private int waitCount;
+    private bool waiting = false;
+    private Vector3 currentTarget;
+
+    private void Awake()
+    {
+        // get self componenents
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        rigidBody = GetComponent<Rigidbody>();
+
+        // set new random target position
+        //walking = true;
+        //currentTarget = FindRandomPosition();
+        //navMeshAgent.SetDestination(currentTarget);
+    }
+
+    private void Start()
+    {
+        // set new random target position
+        walking = true;
+        currentTarget = FindRandomPosition();
+        navMeshAgent.SetDestination(currentTarget);
+    }
+
+
+    private void Update()
+    {
+        Wander();
+        Animate();
+    }
+
+
+    void Wander()
+    {
+
+        // find distance between self and current target
+        float distanceToTarget = Vector3.Distance(transform.position, currentTarget);
+
+        // if close enough to target position, stop and start waiting
+        if (distanceToTarget < wanderTargetError && !waiting)
+        {
+            // stop self
+            navMeshAgent.ResetPath();
+            rigidBody.velocity = new Vector3(0, 0, 0);
+            rigidBody.angularVelocity = new Vector3(0, 0, 0);
+
+            walking = false;
+
+            // create a random amount of time to wait
+            waitCount = Random.Range(500, 1000);
+
+            waiting = true;
+        }
+
+        // wait, and then find new random target
+        if (waiting)
+        {
+            if (waitCount > 0) // delay
+            {
+                waitCount--;
+            }
+            else // set new random target position, and stop waiting
+            {
+                walking = true;
+                currentTarget = FindRandomPosition();
+                navMeshAgent.SetDestination(currentTarget);
+
+                waiting = false;
+            }
+        }
+
+    }
+
+
+
+    Vector3 FindRandomPosition()
+    {
+        // create a random point in a sphere around self
+        Vector3 randomPoint = Random.insideUnitSphere * wanderRadius;
+        randomPoint += transform.position;
+
+        // get the closest postion on the set area navmesh to this point
+        NavMeshHit queryReturn;
+        NavMesh.SamplePosition(randomPoint, out queryReturn, wanderRadius, 1 << NavMesh.GetAreaFromName(areaName));
+        Vector3 finalPosition = queryReturn.position;
+
+        return finalPosition;
+    }
+
+
+
+    void Animate()
     {
         // wave tail
         if (waveDir) 
@@ -54,18 +157,18 @@ public class LizardAI : MonoBehaviour
 
 
         // deturmine direction to wave in (euler angles and loop around from 0-360)
-        if (TailSegment1Holder.transform.eulerAngles.y > waveRange && TailSegment1Holder.transform.eulerAngles.y < 180) // if greater then open angle + range, move "down"
+        if (TailSegment1Holder.transform.localEulerAngles.y > waveRange && TailSegment1Holder.transform.localEulerAngles.y < 180) // if greater then open angle + range, move "down"
         {
             waveDir = false;
         }
-        else if (TailSegment1Holder.transform.eulerAngles.y < (360-waveRange) && TailSegment1Holder.transform.eulerAngles.y > 180) // if less than open angle - range, move "up"
+        else if (TailSegment1Holder.transform.localEulerAngles.y < (360-waveRange) && TailSegment1Holder.transform.localEulerAngles.y > 180) // if less than open angle - range, move "up"
         {
             waveDir = true;
         }
 
 
 
-        if (Bite) // "bite" means having the jaw open, used when near the player
+        if (bite) // "bite" means having the jaw open, used when near the player
         {
             if (!previousBite) // if the jaw was closed before, need to open the jaw
             {
@@ -90,11 +193,11 @@ public class LizardAI : MonoBehaviour
 
 
             // determine direction to move jaws in (these eueler angles are all positive)
-            if ( BottomJaw.transform.eulerAngles.x > (jawRange+biteBottomAngle)) // if greater then open angle + range, move "down"
+            if ( BottomJaw.transform.localEulerAngles.x > (jawRange+biteBottomAngle)) // if greater then open angle + range, move "down"
             {
                 jawDir = true;
             }
-            else if (BottomJaw.transform.eulerAngles.x < (biteBottomAngle-jawRange) ) // if less than open angle - range, move "up"
+            else if (BottomJaw.transform.localEulerAngles.x < (biteBottomAngle-jawRange) ) // if less than open angle - range, move "up"
             {
                 jawDir = false;
             }
@@ -123,11 +226,11 @@ public class LizardAI : MonoBehaviour
 
 
             // deturmine direction to move jaw in (euler angles and loop around from 0-360)
-            if (TopJaw.transform.eulerAngles.x > jawRange && TopJaw.transform.eulerAngles.x < 180) // if too high out of range, move "down"
+            if (TopJaw.transform.localEulerAngles.x > jawRange && TopJaw.transform.localEulerAngles.x < 180) // if too high out of range, move "down"
             {
                 jawDir = false;
             }
-            else if (TopJaw.transform.eulerAngles.x < (360-jawRange) && TopJaw.transform.eulerAngles.x > 180) // if too low out of range, move "up"
+            else if (TopJaw.transform.localEulerAngles.x < (360-jawRange) && TopJaw.transform.localEulerAngles.x > 180) // if too low out of range, move "up"
             {
                 jawDir = true;
             }
@@ -135,7 +238,7 @@ public class LizardAI : MonoBehaviour
 
 
 
-        if (Walking) // use walking animation
+        if (walking) // use walking animation
         { 
 
             // swing legs back and forth
@@ -155,11 +258,11 @@ public class LizardAI : MonoBehaviour
             }
 
             // determine "direction" to walk in
-            if (LegBackRight.transform.eulerAngles.x > walkRange && LegBackRight.transform.eulerAngles.x < 180) // if too high out of range, move "down"
+            if (LegBackRight.transform.localEulerAngles.x > walkRange && LegBackRight.transform.localEulerAngles.x < 180) // if too high out of range, move "down"
             {
                 walkDir = true; // this is arbitrery, but it remains consistent
             }
-            else if (LegBackRight.transform.eulerAngles.x < (360-walkRange) && LegBackRight.transform.eulerAngles.x > 180) // if too low out of range, move "up"
+            else if (LegBackRight.transform.localEulerAngles.x < (360-walkRange) && LegBackRight.transform.localEulerAngles.x > 180) // if too low out of range, move "up"
             {
                 walkDir = false;
             }
@@ -174,7 +277,7 @@ public class LizardAI : MonoBehaviour
         }
 
 
-        previousBite = Bite; // update previous bite to this updates bite
+        previousBite = bite; // update previous bite to this updates bite
 
     }
 }

@@ -21,9 +21,12 @@ public class MummyAnimation : MonoBehaviour
     public GameObject RightLeg;
     public GameObject RightCalf;
 
-    public bool Walking; // fix
-    public bool Attack; // fix
+    public GameObject Spell;
 
+    public bool Walking; // fix
+    public bool Grasp; // fix
+
+    private bool previousGrasp; // store the value of Grasp in the previous update, needed to transition between idle animation and grasp animation
 
     private float swaySpeed = 2.5F;
     private bool swayDir = true; // keep track of swaying direction
@@ -34,27 +37,33 @@ public class MummyAnimation : MonoBehaviour
     private float walkRange = 7.5F;
 
 
+    private void Start()
+    {
+        Spell.SetActive(false); // disable spell effect on start
+    }
+
+
     void Update()
     {
         
         // 
-        if (swayDir) // sway up, bob downward
+        if (swayDir) // sway up
         {
-            LeftArm.transform.Rotate(0, 0, Time.deltaTime * swaySpeed); // + z dir
+            if (!Grasp) { LeftArm.transform.Rotate(0, 0, Time.deltaTime * swaySpeed); } // + z dir, only when not grasping
             RightArm.transform.Rotate(0, 0, -Time.deltaTime * swaySpeed); // - z dir
 
-            LeftForearm.transform.Rotate(0, 0, Time.deltaTime * swaySpeed); // + z dir
+            if (!Grasp) { LeftForearm.transform.Rotate(0, 0, Time.deltaTime * swaySpeed); } // + z dir, only when not grasping
             RightForearm.transform.Rotate(0, 0, -Time.deltaTime * swaySpeed); // - z dir
 
             Body.transform.Rotate(-Time.deltaTime * swaySpeed,0,0); // - x dir
             Head.transform.Rotate(-Time.deltaTime * swaySpeed, 0, 0); // - x dir
         }
-        else // flap down, bob upward
+        else // flap down
         {
-            LeftArm.transform.Rotate(0, 0, -Time.deltaTime * swaySpeed); // - z dir
+            if (!Grasp) { LeftArm.transform.Rotate(0, 0, -Time.deltaTime * swaySpeed); } // - z dir, only when not grasping
             RightArm.transform.Rotate(0, 0, Time.deltaTime * swaySpeed);   // + z dir
 
-            LeftForearm.transform.Rotate(0, 0, -Time.deltaTime * swaySpeed); // + z dir
+            if (!Grasp) { LeftForearm.transform.Rotate(0, 0, -Time.deltaTime * swaySpeed); } // + z dir, only when not grasping
             RightForearm.transform.Rotate(0, 0, Time.deltaTime * swaySpeed); // - z dir
 
             Body.transform.Rotate(Time.deltaTime * swaySpeed, 0, 0); // + x dir
@@ -111,5 +120,28 @@ public class MummyAnimation : MonoBehaviour
         }
 
 
+        if (Grasp)
+        {
+            if (!previousGrasp) // grasp was previously not active, set arm position to grasp angle
+            {
+                LeftArm.transform.localEulerAngles = new Vector3(0, 0, 80);
+                LeftForearm.transform.localEulerAngles = new Vector3(0, 0, -80);
+
+                Spell.SetActive(true); // enable spell effect
+            }
+        }
+        else
+        {
+            if (previousGrasp) // was previously grasping, set arm position to idle
+            {
+                LeftArm.transform.localEulerAngles = new Vector3(0, 0, 0);
+                LeftForearm.transform.localEulerAngles = new Vector3(0, 0, -90);
+
+                Spell.SetActive(false); // disable spell effect
+            }
+        }
+
+
+        previousGrasp = Grasp; // update previous Grasp to this updates Grasp
     }
 }

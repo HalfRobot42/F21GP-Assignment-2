@@ -16,6 +16,8 @@ public class LizardAI : MonoBehaviour
     public GameObject TopJaw;
     public GameObject BottomJaw;
 
+    public GameObject Player;
+
     public string areaName; // default area to wander around
 
     // stores if certain animations are active
@@ -26,8 +28,12 @@ public class LizardAI : MonoBehaviour
 
     private float waveSpeed = 25F; // speed at which to wave the tail
     private bool waveDir = true; // keep track of waving direction (direction is arbitrary, but consistent)
-    private float walkSpeed = 35F;
+
+    private const float walkSpeedHigh = 150F; // speed to wave legs in when running
+    private const float walkSpeedLow = 35F; // speed to wave legs in when walking idle
+    private float walkSpeed = walkSpeedLow;
     private bool walkDir = true;
+
     private float jawSpeed = 5F; // jaw idle animation 
     private bool jawDir = true;
 
@@ -53,6 +59,17 @@ public class LizardAI : MonoBehaviour
     private bool waiting = false;
     private Vector3 currentTarget;
 
+
+    // player chase variables
+    private bool playerDetected = false;
+    private bool playerDetectedPrevious = false;
+    private float detectRadius = 20F;
+    private float targetError = 1F;//0.2F;
+
+    // speed variables
+    private const float speedHigh = 2F; // when chasing the player
+    private const float speedLow = 0.5F; // idle walking speed
+
     private void Awake()
     {
         // get self componenents
@@ -62,6 +79,8 @@ public class LizardAI : MonoBehaviour
 
     private void Start()
     {
+        navMeshAgent.speed = speedLow; // walking speed
+
         // set new random target position
         walking = true;
         currentTarget = FindRandomPosition();
@@ -71,8 +90,85 @@ public class LizardAI : MonoBehaviour
 
     private void Update()
     {
-        Wander();
+
+        // check if player is close enough and there is a straight line
+        if (Vector3.Distance(transform.position, Player.transform.position) < detectRadius)
+        {
+            // find the vector pointing from self to the player
+            Vector3 rayVector = Player.transform.position - transform.position;
+
+            RaycastHit rayQuery;
+            Physics.Raycast(transform.position, rayVector, out rayQuery, detectRadius);
+
+            if (rayQuery.collider.tag == "Player")
+            {
+                playerDetected = true; // player is in line of sight
+            }
+            else
+            {
+                playerDetected = false; // player is not in line of sight
+            }
+        }
+
+        if (playerDetected)
+        {
+            if (!playerDetectedPrevious) // was previously wandering
+            {
+                walking = true;
+
+                // start running
+                walkSpeed = walkSpeedHigh;
+                navMeshAgent.speed = speedHigh;
+
+                // set target to current player position
+                navMeshAgent.SetDestination(Player.transform.position);
+            }
+            chasePlayer();
+        }
+        else
+        {
+            if (playerDetectedPrevious) // was previously chasing
+            {
+                // stop and wait, then wander
+                Stop();
+                walking = false;
+
+                // start walking again
+                walkSpeed = walkSpeedLow;
+                navMeshAgent.speed = speedLow;
+            }
+
+            Wander(); // idle actions
+
+        }
+            
         Animate();
+
+        playerDetectedPrevious = playerDetected; // update previous detected to current for next update
+    }
+
+
+    void chasePlayer()
+    {
+        // when this function is called, target has already been set, need to monitor it
+        if (Vector3.Distance(transform.position, navMeshAgent.destination) < targetError) // check how close the agent is to it's current target (players previous positon)
+        {
+            // agent is close enough
+
+            // stop and reset the player detect
+            Stop();
+            walking = false;
+            playerDetected = false;
+        }
+    }
+
+
+    void Stop()
+    {
+        // stop self
+        navMeshAgent.ResetPath();
+        rigidBody.velocity = new Vector3(0, 0, 0);
+        rigidBody.angularVelocity = new Vector3(0, 0, 0);
     }
 
 
@@ -86,9 +182,7 @@ public class LizardAI : MonoBehaviour
         if (distanceToTarget < wanderTargetError && !waiting)
         {
             // stop self
-            navMeshAgent.ResetPath();
-            rigidBody.velocity = new Vector3(0, 0, 0);
-            rigidBody.angularVelocity = new Vector3(0, 0, 0);
+            Stop();
 
             walking = false;
 

@@ -22,6 +22,8 @@ public class MummyAI : MonoBehaviour
 
     public GameObject Spell;
 
+    public GameObject Player; // player to chase
+
     public string areaName; // default area to wander around
 
     private bool walking = true; // true if walking
@@ -34,8 +36,14 @@ public class MummyAI : MonoBehaviour
     private float walkSpeed = 20F;
     private bool walkDir = true;
 
+    // ranges for animations
     private float swayRange = 5;
     private float walkRange = 7.5F;
+
+    // player vairables
+    private float detectRadius = 10F;
+    private float attackRadius = 5F;
+    private bool playerDetected = false;
 
 
     // self components
@@ -72,10 +80,52 @@ public class MummyAI : MonoBehaviour
 
     void Update()
     {
-        Wander();
+        // if close enough to the player, start chasing them
+        if (Vector3.Distance(transform.position, Player.transform.position) < detectRadius)
+        {
+            // find the vector pointing from self to the player
+            Vector3 rayVector = Player.transform.position - transform.position;
+
+            // create ray to check we have a line of sight to the player
+            RaycastHit rayQuery;
+            Physics.Raycast(transform.position, rayVector, out rayQuery, detectRadius);
+
+            if (rayQuery.collider.tag == "Player")
+            {
+                playerDetected = true; // player is in line of sight
+            }
+        }
+
+        if (playerDetected)
+        {
+            ChasePlayer();
+        }
+        else
+        {
+            Wander();
+        }
 
         Animate();
     }
+
+
+    void ChasePlayer()
+    {
+        // set target to current player position
+        navMeshAgent.SetDestination(Player.transform.position);
+
+        // if close enough to the player, attack
+        if (Vector3.Distance(transform.position, Player.transform.position) < attackRadius)
+        {
+            grasp = true;
+        }
+        else
+        {
+            grasp = false;
+        }
+
+    }
+
 
 
 

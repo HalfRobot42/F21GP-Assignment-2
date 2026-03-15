@@ -63,6 +63,7 @@ public class LizardAI : MonoBehaviour
     // player chase variables
     private bool playerDetected = false;
     private bool playerDetectedPrevious = false;
+    private int playerDetectedCount = 0;
     private float detectRadius = 20F;
     private float targetError = 1F;//0.2F;
 
@@ -114,11 +115,17 @@ public class LizardAI : MonoBehaviour
         {
             if (!playerDetectedPrevious) // was previously wandering
             {
+                playerDetectedCount++; // keep track of number of time we've seen the player
+
+                // start walking animation
                 walking = true;
 
                 // start running
                 walkSpeed = walkSpeedHigh;
                 navMeshAgent.speed = speedHigh;
+
+                // open jaw
+                bite = true;
 
                 // set target to current player position
                 navMeshAgent.SetDestination(Player.transform.position);
@@ -129,16 +136,23 @@ public class LizardAI : MonoBehaviour
         {
             if (playerDetectedPrevious) // was previously chasing
             {
-                // stop and wait, then wander
+                // stop and wait
                 Stop();
                 walking = false;
 
-                // start walking again
+                // close jaw
+                bite = false;
+
+                // set walking animation vars again
                 walkSpeed = walkSpeedLow;
                 navMeshAgent.speed = speedLow;
             }
 
-            Wander(); // idle actions
+            if (playerDetectedCount == 0)
+            {
+                Wander(); // idle actions, if we have not yet seen the player
+            }
+            
 
         }
             

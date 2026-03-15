@@ -58,11 +58,6 @@ public class LizardAI : MonoBehaviour
         // get self componenents
         navMeshAgent = GetComponent<NavMeshAgent>();
         rigidBody = GetComponent<Rigidbody>();
-
-        // set new random target position
-        //walking = true;
-        //currentTarget = FindRandomPosition();
-        //navMeshAgent.SetDestination(currentTarget);
     }
 
     private void Start()

@@ -56,11 +56,6 @@ public class MummyAI : MonoBehaviour
         // get self componenents
         navMeshAgent = GetComponent<NavMeshAgent>();
         rigidBody = GetComponent<Rigidbody>();
-
-        // set new random target position
-        //walking = true;
-        //currentTarget = FindRandomPosition();
-        //navMeshAgent.SetDestination(currentTarget);
     }
 
 

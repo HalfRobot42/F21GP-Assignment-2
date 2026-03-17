@@ -2130,7 +2130,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7966397715882749328}
-  - component: {fileID: 3770892662042591841}
+  - component: {fileID: 4430799955561929334}
+  - component: {fileID: 8342967221888019876}
+  - component: {fileID: 170003610839649808}
+  - component: {fileID: 1202986490767302206}
+  - component: {fileID: 8680959580703544619}
   m_Layer: 0
   m_Name: Lizard
   m_TagString: Untagged
@@ -2154,7 +2158,7 @@ Transform:
   - {fileID: 6524022611983605011}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3770892662042591841
+--- !u!114 &4430799955561929334
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2163,7 +2167,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1099605076960886865}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3c27de58b85841488bf86b067f1d550, type: 3}
+  m_Script: {fileID: 11500000, guid: 77934aa778c02ff4f8d1a7250e585472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TailSegment1Holder: {fileID: 5474684196512848476}
@@ -2174,8 +2178,96 @@ MonoBehaviour:
   LegFrontLeft: {fileID: 3398722150838355044}
   TopJaw: {fileID: 4136904127979813042}
   BottomJaw: {fileID: 1312675283219347124}
-  Walking: 0
-  Bite: 0
+  areaName: 
+--- !u!65 &8342967221888019876
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099605076960886865}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.625, y: 0.546875, z: 2.265625}
+  m_Center: {x: 0, y: 0.2734375, z: -0.0390625}
+--- !u!54 &170003610839649808
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099605076960886865}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0.1
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!195 &1202986490767302206
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099605076960886865}
+  m_Enabled: 1
+  m_AgentTypeID: -334000983
+  m_Radius: 1.3
+  m_Speed: 0.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 50
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.625
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &8680959580703544619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099605076960886865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1305109183027954321
 GameObject:
   m_ObjectHideFlags: 0
@@ -12540,8 +12632,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5895824633449387495}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0.3125, y: 0.078125, z: 0.5078125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12562,7 +12654,7 @@ Transform:
   - {fileID: 6794323371684381068}
   - {fileID: 285698671717372660}
   m_Father: {fileID: 7966397715882749328}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &3863726631691750687
 MonoBehaviour:
   m_ObjectHideFlags: 0

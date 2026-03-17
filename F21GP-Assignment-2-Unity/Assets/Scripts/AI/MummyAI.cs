@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -83,6 +85,7 @@ public class MummyAI : MonoBehaviour
         // if close enough to the player, start chasing them
         if (Vector3.Distance(transform.position, Player.transform.position) < detectRadius)
         {
+
             // find the vector pointing from self to the player
             Vector3 rayVector = Player.transform.position - transform.position;
 
@@ -111,6 +114,8 @@ public class MummyAI : MonoBehaviour
 
     void ChasePlayer()
     {
+        walking = true;
+
         // set target to current player position
         navMeshAgent.SetDestination(Player.transform.position);
 

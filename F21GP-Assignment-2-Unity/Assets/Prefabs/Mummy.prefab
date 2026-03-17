@@ -416,6 +416,7 @@ MonoBehaviour:
   RightLeg: {fileID: 5611853846721191277}
   RightCalf: {fileID: 6201456362454043084}
   Spell: {fileID: 7227430862505517714}
+  Player: {fileID: 0}
   areaName: 
 --- !u!65 &7294812846750197495
 BoxCollider:
@@ -446,9 +447,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690804409672339342}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0.1
-  m_AngularDrag: 0.05
+  m_Mass: 10
+  m_Drag: 0.5
+  m_AngularDrag: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}

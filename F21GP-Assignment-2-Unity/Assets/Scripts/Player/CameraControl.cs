@@ -13,10 +13,15 @@ public class CameraControl : MonoBehaviour
     public float sensX;
     public float sensY;
 
-    public Transform orientation; // player orientation
+    // gun animation
+    public GameObject GunHolder; // gun to rotate (recoil) when shooting
+    public GameObject BarrelPlacement; // gun barrel location to move spark effect too
+    public ParticleSystem ParticleBarrel; // the spark effect to spawn on the gun barrel
+    public ParticleSystem ParticleEnemy; // the spark effect to spawn on the enemy
+    public ParticleSystem ParticleClay; // the spark effect to spawn on clay items
+    public ParticleSystem ParticleEnvironment; // the spark effect to spawn on the environment
 
-    float xRotation;
-    float yRotation;
+    public Transform orientation; // player orientation
 
 
     // keep track of camera rotation
@@ -28,30 +33,21 @@ public class CameraControl : MonoBehaviour
     private Vector2 currentMouseDeltaVelocity;
     private float mouseSmoothTime = 0.03f;
 
+    // shooting variables
+    private bool readyToShoot = true;
+    private float shootCooldown = 0.3F;
+    private float shootRange = 20F;
 
-
-    // private bool isObjectHeld = false;
-    
-    //public TMP_Text cameraDir;
+    // gun animation variables
+    private float recoilSpeed = 500F;
+    private float recoilAngle = 60;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-    // private void OnEnable()
-    // {
-    //     // subscribe to object pickup and drop events
-    //     objectForce.OnObjectPickup += fixCameraRotation;
-    //     objectForce.OnObjectDrop += resetCameraRotation;
-    // }
-    //
-    // private void OnDisable()
-    // {
-    //     // unsubscribe if script is removed or destroyed
-    //     objectForce.OnObjectPickup -= fixCameraRotation;
-    //     objectForce.OnObjectDrop -= resetCameraRotation;
-    // }
+    
 
     private void Update()
     {
@@ -65,15 +61,6 @@ public class CameraControl : MonoBehaviour
         cameraMoveY -= currentMouseDelta.y * sensY;
         cameraMoveX += currentMouseDelta.x * sensX;
 
-        // cap y look depending on if holding an object or not
-        // if (isObjectHeld)
-        // {
-        //     cameraMoveY = Mathf.Clamp(cameraMoveY, -80f, 35f);
-        // }
-        // else
-        // {
-        //     cameraMoveY = Mathf.Clamp(cameraMoveY, -90.0f, 90.0f);
-        // }
         
         cameraMoveY = Mathf.Clamp(cameraMoveY, -90.0f, 90.0f);
 
@@ -82,42 +69,77 @@ public class CameraControl : MonoBehaviour
         orientation.rotation = Quaternion.Euler(0, cameraMoveX, 0); // we only want to rotate the player horizontally (around the y axis)
 
 
-        // old code
-        /*
-        // mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
-
-        yRotation += mouseX;
-
-        xRotation -= mouseY;
-
-        if (isObjectHeld)
+        // get left click input
+        if (Input.GetMouseButtonDown(0) && readyToShoot)
         {
-           xRotation = Mathf.Clamp(xRotation, -80f, 35f); 
+            readyToShoot = false; // prevent continuous shooting
+            StartCoroutine(ShootAnimation()); // start shoot animation coroutine
+            Invoke(nameof(ResetShoot), shootCooldown); // don't wan the player shooting continuously, create cooldown to reset
+
+            // cast a ray from the camera forward and see if we hit an enemy
+            RaycastHit rayQuery;
+            bool collision = Physics.Raycast(transform.position, transform.forward, out rayQuery, shootRange);
+
+            // ray hit an object
+            if (collision) {
+
+                if (rayQuery.collider.tag == "Enemy") // hit an enemy
+                {
+                    // teleport the particle system to the collision point
+                    ParticleEnemy.transform.position = rayQuery.point;
+                    ParticleEnemy.Play(); // play spark animation
+                }
+                else if(rayQuery.collider.tag == "Clay") // hit a clay item
+                {
+                    ParticleClay.transform.position = rayQuery.point;
+                    ParticleClay.Play(); 
+                }
+                else // hit a random object, probably a wall
+                {
+                    ParticleEnvironment.transform.position = rayQuery.point;
+                    ParticleEnvironment.Play(); 
+                }
+            }
+            
         }
-        else
-        {
-            xRotation = Mathf.Clamp(xRotation, -80f, 80f);
-        }
-        // rotate cam and orientation
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
-        // cameraDir.text = "Camera Dir: " + orientation.position;
-        */
+
+        // teleport the barrel effect to the barrel of the gun
+        ParticleBarrel.transform.position = BarrelPlacement.transform.position;
     }
 
- 
-//    private void fixCameraRotation()
-//     {
-//         if (isObjectHeld == false)
-//         {
-//             isObjectHeld = true;
-//         }
-//     }
-//
-//     private void resetCameraRotation()
-//     {
-//         isObjectHeld = false;
-//     }
+
+    private void ResetShoot()
+    {
+        readyToShoot = true;
+    }
+
+
+    IEnumerator ShootAnimation()
+    {
+        // teleport the particle effect to the barrel of the gun
+        ParticleBarrel.transform.position = BarrelPlacement.transform.position;
+        ParticleBarrel.Play(); // play spark animation
+
+        // reduce angle so now (because of euler) angles are below 360
+        GunHolder.transform.localEulerAngles = new Vector3(359.9F, 0, 0); 
+
+        // while angle has not reached the recoil angle desired (below 360)
+        while (GunHolder.transform.localEulerAngles.x > (360-recoilAngle)) { 
+            GunHolder.transform.Rotate(-Time.deltaTime * recoilSpeed,0,0); // - x dir
+            yield return null;
+        }
+
+        // need to rotate upwards until the euler angles wraps round to 0 again, can check this by seeing if the angle is greater than a low number
+        // will stop when the angle is now between 0 and this low number
+        while (GunHolder.transform.localEulerAngles.x > 10) 
+        {
+            GunHolder.transform.Rotate(Time.deltaTime * recoilSpeed,0,0); // + x dir
+            yield return null;
+        }
+        
+        // rotate back to original position
+        GunHolder.transform.localEulerAngles = new Vector3(0, 0, 0);
+
+    }
+
 }

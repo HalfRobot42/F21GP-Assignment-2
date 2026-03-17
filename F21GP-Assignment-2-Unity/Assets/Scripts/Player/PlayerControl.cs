@@ -22,8 +22,6 @@ public class PlayerControl : MonoBehaviour
     [Header("Keybinds")]
     private KeyCode jumpKey = KeyCode.Space;
     
-    // Key O for "fOrce" use with right hand
-    //private KeyCode forceKey = KeyCode.O;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -88,10 +86,6 @@ public class PlayerControl : MonoBehaviour
 
             Invoke(nameof(ResetJump), jumpCooldown); // reset jump after x seconds, can jump again
         }
-        //else if (Input.GetKey(forceKey))
-        //{
-            
-        //}
     }
 
     private void MovePlayer()

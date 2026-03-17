@@ -82,16 +82,16 @@ public class MummyAI : MonoBehaviour
 
     void Update()
     {
-        // if close enough to the player, start chasing them
-        if (Vector3.Distance(transform.position, Player.transform.position) < detectRadius)
+        // if close enough to the player, start chasing them (measure from the head)
+        if (Vector3.Distance(Head.transform.position, Player.transform.position) < detectRadius)
         {
 
             // find the vector pointing from self to the player
-            Vector3 rayVector = Player.transform.position - transform.position;
+            Vector3 rayVector = Player.transform.position - Head.transform.position;
 
             // create ray to check we have a line of sight to the player
             RaycastHit rayQuery;
-            Physics.Raycast(transform.position, rayVector, out rayQuery, detectRadius);
+            Physics.Raycast(Head.transform.position, rayVector, out rayQuery, detectRadius);
 
             if (rayQuery.collider.tag == "Player")
             {

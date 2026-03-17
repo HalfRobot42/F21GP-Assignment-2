@@ -10,6 +10,5 @@ public class CameraHolder : MonoBehaviour
     void Update()
     {
         transform.position = cameraPosition.position; // constantly be moving camera to player position
-        //Debug.Log(transform.position);
     }
 }

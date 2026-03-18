@@ -416,6 +416,7 @@ MonoBehaviour:
   RightLeg: {fileID: 5611853846721191277}
   RightCalf: {fileID: 6201456362454043084}
   Spell: {fileID: 7227430862505517714}
+  Skeleton: {fileID: 690804409672339342, guid: 3ceada1e4fd71f04d99c806fd7feebff, type: 3}
   Player: {fileID: 0}
   areaName: 
   health: 5

@@ -24,6 +24,8 @@ public class MummyAI : MonoBehaviour
 
     public GameObject Spell;
 
+    public GameObject Skeleton;
+
     public GameObject Player; // player to chase
 
     public string areaName; // default area to wander around
@@ -85,9 +87,6 @@ public class MummyAI : MonoBehaviour
 
     void Update()
     {
-        // check health and die if needed
-        CheckHealth();
-
         // if close enough to the player, start chasing them (measure from the head)
         if (Vector3.Distance(Head.transform.position, Player.transform.position) < detectRadius)
         {
@@ -107,14 +106,18 @@ public class MummyAI : MonoBehaviour
 
         if (playerDetected)
         {
-            ChasePlayer();
+            ChasePlayer(); // attack
         }
         else
         {
-            Wander();
+            Wander(); // idle behaviour
         }
 
+        // run animations
         Animate();
+
+        // check health and die if needed
+        CheckHealth();
     }
 
 
@@ -122,6 +125,16 @@ public class MummyAI : MonoBehaviour
     {
         if (health <= 0) // die now
         {
+            // spawn a skeleton at our location
+            GameObject RagDoll = Instantiate(Skeleton, transform.position, transform.rotation);
+
+            // apply a force to scatter the pieces, apply to each child in the ragdoll
+            foreach (Transform child in RagDoll.transform)
+            {
+                child.gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * Random.Range(5F,10F), ForceMode.Force);
+            }  
+
+            // set inactive
             gameObject.SetActive(false);
         }
     }

@@ -8,6 +8,8 @@ TagManager:
   - Clay
   - Mummy
   - Lizard
+  - LizardDead
+  - Grass
   layers:
   - Default
   - TransparentFX

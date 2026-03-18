@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,6 +16,8 @@ public class LizardAI : MonoBehaviour
     public GameObject LegFrontLeft;
     public GameObject TopJaw;
     public GameObject BottomJaw;
+
+    public GameObject LizardDead;
 
     public GameObject Player;
 
@@ -67,7 +70,7 @@ public class LizardAI : MonoBehaviour
     private bool playerDetected = false;
     private bool playerDetectedPrevious = false;
     private int playerDetectedCount = 0;
-    private float detectRadius = 20F;
+    private float detectRadius = 5F;
     private float targetError = 1F;//0.2F;
 
     // speed variables
@@ -96,13 +99,14 @@ public class LizardAI : MonoBehaviour
     {
 
         // check if player is close enough and there is a straight line
-        if (Vector3.Distance(transform.position, Player.transform.position) < detectRadius)
+        if (Vector3.Distance(TopJaw.transform.position, Player.transform.position) < detectRadius)
         {
             // find the vector pointing from self to the player
-            Vector3 rayVector = Player.transform.position - transform.position;
+            // measure from top jaw, closest to eyes
+            Vector3 rayVector = Player.transform.position - TopJaw.transform.position;
 
             RaycastHit rayQuery;
-            Physics.Raycast(transform.position, rayVector, out rayQuery, detectRadius);
+            Physics.Raycast(TopJaw.transform.position, rayVector, out rayQuery, detectRadius);
 
             if (rayQuery.collider.tag == "Player")
             {
@@ -139,11 +143,13 @@ public class LizardAI : MonoBehaviour
         {
             if (playerDetectedPrevious) // was previously chasing
             {
+                Debug.Log("stopping");
                 // stop and wait
-                Stop();
+                StopInPlace();
                 walking = false;
 
                 // close jaw
+                Debug.Log("closing jaw");
                 bite = false;
 
                 // set walking animation vars again
@@ -162,6 +168,22 @@ public class LizardAI : MonoBehaviour
         Animate();
 
         playerDetectedPrevious = playerDetected; // update previous detected to current for next update
+
+        // check health and die if needed
+        CheckHealth();
+    }
+
+
+    void CheckHealth()
+    {
+        if (health <= 0) // die now
+        {
+            // spawn a dead lizard at our location
+            GameObject RagDoll = Instantiate(LizardDead, transform.position, transform.rotation);
+
+            // set inactive
+            gameObject.SetActive(false);
+        }
     }
 
 
@@ -173,14 +195,14 @@ public class LizardAI : MonoBehaviour
             // agent is close enough
 
             // stop and reset the player detect
-            Stop();
+            StopInPlace();
             walking = false;
             playerDetected = false;
         }
     }
 
 
-    void Stop()
+    void StopInPlace()
     {
         // stop self
         navMeshAgent.ResetPath();
@@ -199,7 +221,7 @@ public class LizardAI : MonoBehaviour
         if (distanceToTarget < wanderTargetError && !waiting)
         {
             // stop self
-            Stop();
+            StopInPlace();
 
             walking = false;
 

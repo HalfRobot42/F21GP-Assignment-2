@@ -101,6 +101,11 @@ public class CameraControl : MonoBehaviour
                     // reduce enemy health
                     rayQuery.transform.gameObject.GetComponent<LizardAI>().health--;
                 }
+                else if (rayQuery.collider.tag == "LizardDead") // hit a dead lizard
+                {
+                    ParticleEnemy.transform.position = rayQuery.point;
+                    ParticleEnemy.Play();
+                }
                 else if(rayQuery.collider.tag == "Clay") // hit a clay item
                 {
                     ParticleClay.transform.position = rayQuery.point;

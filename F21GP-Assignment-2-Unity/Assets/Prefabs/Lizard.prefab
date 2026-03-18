@@ -2137,7 +2137,7 @@ GameObject:
   - component: {fileID: 8680959580703544619}
   m_Layer: 0
   m_Name: Lizard
-  m_TagString: Enemy
+  m_TagString: Lizard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2180,6 +2180,7 @@ MonoBehaviour:
   BottomJaw: {fileID: 1312675283219347124}
   Player: {fileID: 0}
   areaName: 
+  health: 5
 --- !u!65 &8342967221888019876
 BoxCollider:
   m_ObjectHideFlags: 0

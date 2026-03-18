@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
 
 // code inspo
 //https://www.youtube.com/watch?v=f473C43s8nE&t=128s
@@ -17,7 +18,7 @@ public class CameraControl : MonoBehaviour
     public GameObject GunHolder; // gun to rotate (recoil) when shooting
     public GameObject BarrelPlacement; // gun barrel location to move spark effect too
     public ParticleSystem ParticleBarrel; // the spark effect to spawn on the gun barrel
-    public ParticleSystem ParticleEnemy; // the spark effect to spawn on the enemy
+    public ParticleSystem ParticleEnemy; // the spark effect to spawn on the enemy (1 enemy type per level, change depending on the level)
     public ParticleSystem ParticleClay; // the spark effect to spawn on clay items
     public ParticleSystem ParticleEnvironment; // the spark effect to spawn on the environment
 
@@ -83,11 +84,22 @@ public class CameraControl : MonoBehaviour
             // ray hit an object
             if (collision) {
 
-                if (rayQuery.collider.tag == "Enemy") // hit an enemy
+                if (rayQuery.collider.tag == "Mummy") // hit an mummy
                 {
                     // teleport the particle system to the collision point
                     ParticleEnemy.transform.position = rayQuery.point;
                     ParticleEnemy.Play(); // play spark animation
+
+                    // reduce enemy health
+                    rayQuery.transform.gameObject.GetComponent<MummyAI>().health--;
+                }
+                else if (rayQuery.collider.tag == "Lizard") // hit a lizard
+                {
+                    ParticleEnemy.transform.position = rayQuery.point;
+                    ParticleEnemy.Play(); 
+
+                    // reduce enemy health
+                    rayQuery.transform.gameObject.GetComponent<LizardAI>().health--;
                 }
                 else if(rayQuery.collider.tag == "Clay") // hit a clay item
                 {

@@ -28,6 +28,9 @@ public class MummyAI : MonoBehaviour
 
     public string areaName; // default area to wander around
 
+    // enemy health
+    public float health = 5;
+
     private bool walking = true; // true if walking
     private bool grasp = false; // true if grasping
 
@@ -82,6 +85,9 @@ public class MummyAI : MonoBehaviour
 
     void Update()
     {
+        // check health and die if needed
+        CheckHealth();
+
         // if close enough to the player, start chasing them (measure from the head)
         if (Vector3.Distance(Head.transform.position, Player.transform.position) < detectRadius)
         {
@@ -109,6 +115,15 @@ public class MummyAI : MonoBehaviour
         }
 
         Animate();
+    }
+
+
+    void CheckHealth()
+    {
+        if (health <= 0) // die now
+        {
+            gameObject.SetActive(false);
+        }
     }
 
 

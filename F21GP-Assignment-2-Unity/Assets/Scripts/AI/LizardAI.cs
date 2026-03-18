@@ -20,6 +20,9 @@ public class LizardAI : MonoBehaviour
 
     public string areaName; // default area to wander around
 
+    // enemy health
+    public float health = 5;
+
     // stores if certain animations are active
     private bool walking = false; 
     private bool bite = false; 

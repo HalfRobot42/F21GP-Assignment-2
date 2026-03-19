@@ -115,7 +115,10 @@ MonoBehaviour:
   BarrelPlacement: {fileID: 2261486889477608891}
   ParticleBarrel: {fileID: 0}
   ParticleEnemy: {fileID: 0}
+  ParticleClay: {fileID: 0}
   ParticleEnvironment: {fileID: 0}
+  PotRagdoll: {fileID: 7545507910989432301, guid: 4a1696556ba01094da722a9ce035fe97, type: 3}
+  PotLargeRagdoll: {fileID: 7545507910989432301, guid: cfec216af8e2fff47b01d5a702d431b1, type: 3}
   orientation: {fileID: 0}
 --- !u!1 &2169934524637069588
 GameObject:

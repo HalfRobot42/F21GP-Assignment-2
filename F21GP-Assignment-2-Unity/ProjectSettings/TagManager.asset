@@ -11,6 +11,7 @@ TagManager:
   - LizardDead
   - Grass
   - ClayPot
+  - ClayPotLarge
   layers:
   - Default
   - TransparentFX

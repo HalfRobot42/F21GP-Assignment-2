@@ -22,7 +22,12 @@ public class CameraControl : MonoBehaviour
     public ParticleSystem ParticleClay; // the spark effect to spawn on clay items
     public ParticleSystem ParticleEnvironment; // the spark effect to spawn on the environment
 
-    public Transform orientation; // player orientation
+    // environment destruction
+    public GameObject PotRagdoll;
+    public GameObject PotLargeRagdoll;
+
+    // player orientation
+    public Transform orientation; 
 
 
     // keep track of camera rotation
@@ -115,8 +120,48 @@ public class CameraControl : MonoBehaviour
                     ParticleClay.transform.position = rayQuery.point;
                     ParticleClay.Play();
 
-                    // add a force
-                    rayQuery.transform.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 50F, ForceMode.Force);
+                    // replace the pot with a ragdoll
+                    // spawn a ragdoll pot at the pots location
+                    GameObject RagDoll = Instantiate(PotRagdoll, rayQuery.collider.transform.position, rayQuery.collider.transform.rotation);
+
+                    // apply a random force to scatter the pieces, apply to each child in the ragdoll
+                    foreach (Transform child in RagDoll.transform)
+                    {
+                        // create a random direction vector
+                        Vector3 forceDir = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1));
+                        forceDir = forceDir.normalized;
+
+                        float forceMag = Random.Range(5F, 10F);
+
+                        child.gameObject.GetComponent<Rigidbody>().AddForce(forceDir * forceMag, ForceMode.Force);
+                    }
+
+                    // set original pot inactive
+                    rayQuery.collider.gameObject.SetActive(false);
+                }
+                else if (rayQuery.collider.tag == "ClayPotLarge") // hit a large clay pot
+                {
+                    ParticleClay.transform.position = rayQuery.point;
+                    ParticleClay.Play();
+
+                    // replace the pot with a ragdoll
+                    // spawn a ragdoll pot at the pots location
+                    GameObject RagDoll = Instantiate(PotLargeRagdoll, rayQuery.collider.transform.position, rayQuery.collider.transform.rotation);
+
+                    // apply a random force to scatter the pieces, apply to each child in the ragdoll
+                    foreach (Transform child in RagDoll.transform)
+                    {
+                        // create a random direction vector
+                        Vector3 forceDir = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1));
+                        forceDir = forceDir.normalized;
+
+                        float forceMag = Random.Range(5F, 10F);
+
+                        child.gameObject.GetComponent<Rigidbody>().AddForce(forceDir * forceMag, ForceMode.Force);
+                    }
+
+                    // set original pot inactive
+                    rayQuery.collider.gameObject.SetActive(false);
                 }
                 else // hit a random object, probably a wall
                 {

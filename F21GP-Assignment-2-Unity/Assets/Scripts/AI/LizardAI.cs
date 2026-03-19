@@ -16,6 +16,7 @@ public class LizardAI : MonoBehaviour
     public GameObject LegFrontLeft;
     public GameObject TopJaw;
     public GameObject BottomJaw;
+    public GameObject AttackPosition;
 
     public GameObject LizardDead;
 
@@ -24,8 +25,8 @@ public class LizardAI : MonoBehaviour
     public string areaName; // default area to wander around
 
     // enemy health
-    public float health = 5;  // actual health value to reduce
-    private float maxHealth; // starting health
+    public int health = 5;  // actual health value to reduce
+    private int maxHealth; // starting health
 
     // stores if certain animations are active
     private bool walking = false; 
@@ -70,7 +71,10 @@ public class LizardAI : MonoBehaviour
     // player chase variables
     private bool playerDetected = false;
     private float detectRadius = 7F;
-    private float attackRadius = 2.5F;
+    private float biteRange = 2.5F;
+    private float attackRange = 1F;
+    private bool readyToAttack = true;
+    private float attackCooldown = 1F;
 
     // speed variables
     private const float speedHigh = 4F; // when chasing the player
@@ -100,16 +104,16 @@ public class LizardAI : MonoBehaviour
     private void Update()
     {
         // if close enough to the player, start chasing them 
-        // measure from top jaw, closest to eyes
-        if (Vector3.Distance(TopJaw.transform.position, Player.transform.position) < detectRadius && !playerDetected)
+        // measure from attack position between eyes
+        if (Vector3.Distance(AttackPosition.transform.position, Player.transform.position) < detectRadius && !playerDetected)
         {
 
             // find the vector pointing from self to the player
-            Vector3 rayVector = Player.transform.position - TopJaw.transform.position;
+            Vector3 rayVector = Player.transform.position - AttackPosition.transform.position;
 
             // create ray to check we have a line of sight to the player
             RaycastHit rayQuery;
-            Physics.Raycast(TopJaw.transform.position, rayVector, out rayQuery, detectRadius);
+            Physics.Raycast(AttackPosition.transform.position, rayVector, out rayQuery, detectRadius);
 
             if (rayQuery.collider.tag == "Player")
             {
@@ -163,15 +167,42 @@ public class LizardAI : MonoBehaviour
         // set target to current player position
         navMeshAgent.SetDestination(Player.transform.position);
 
-        // if close enough to the player, attack
-        if (Vector3.Distance(transform.position, Player.transform.position) < attackRadius)
+        // if close enough to the player, bite and attack (from AttackPosition)
+        if (Vector3.Distance(AttackPosition.transform.position, Player.transform.position) < biteRange)
         {
             bite = true;
+
+            // cast a ray from the enemy forward direction and see if we hit the player
+            RaycastHit rayQuery;
+            bool collision = Physics.Raycast(AttackPosition.transform.position, transform.forward, out rayQuery, attackRange);
+
+            // ray hit an object
+            if (collision)
+            {
+                if (rayQuery.collider.tag == "Player" && readyToAttack) // hit the player, and can attack
+                {
+                    readyToAttack = false; // prevent continuous attack
+                    Invoke(nameof(ResetAttack), attackCooldown); // don't want the enemy attacking continuously, create cooldown to reset
+
+                    // reduce player health
+                    rayQuery.transform.gameObject.GetComponent<PlayerControl>().health--;
+
+                    Player.GetComponent<Rigidbody>().AddForce(transform.forward * 100F, ForceMode.Impulse);
+                    Player.GetComponent<Rigidbody>().AddForce(transform.up * 12.5F, ForceMode.Impulse);
+                }
+
+            }
         }
         else
         {
             bite = false;
         }
+    }
+
+
+    private void ResetAttack()
+    {
+        readyToAttack = true;
     }
 
     void Wander()

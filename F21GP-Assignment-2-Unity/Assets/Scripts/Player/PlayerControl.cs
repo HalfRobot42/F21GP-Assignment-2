@@ -36,6 +36,12 @@ public class PlayerControl : MonoBehaviour
     float horizontalInput;
     float verticalInput;
 
+    [Header("Health")]
+
+    // player health
+    public int health = 5; // actual health value to reduce
+    private int maxHealth; // starting health
+
     Vector3 moveDirection;
 
     private Rigidbody rb;
@@ -48,10 +54,15 @@ public class PlayerControl : MonoBehaviour
         readyToJump = true;
 
         //Cursor.lockState = CursorLockMode.Locked; // Lock cursor to screen
+
+        // set maxhealth to starting health value
+        maxHealth = health;
     }
 
     private void Update()
     {
+        Debug.Log(health);
+
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         
         KeyboardInput();

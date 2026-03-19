@@ -4,7 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-// code inspo
+// code inspo (for basic player setup)
 //https://www.youtube.com/watch?v=f473C43s8nE&t=128s
 //https://www.youtube.com/watch?v=yl2Tv72tV7U
 

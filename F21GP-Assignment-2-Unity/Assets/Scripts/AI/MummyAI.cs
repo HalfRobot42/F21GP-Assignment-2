@@ -32,8 +32,8 @@ public class MummyAI : MonoBehaviour
     public string areaName; // default area to wander around
 
     // enemy health
-    public float health = 5; // actual health value to reduce
-    private float maxHealth; // starting health
+    public int health = 5; // actual health value to reduce
+    private int maxHealth; // starting health
 
     private bool walking = true; // true if walking
     private bool grasp = false; // true if grasping
@@ -51,8 +51,11 @@ public class MummyAI : MonoBehaviour
 
     // player vairables
     private float detectRadius = 10F;
-    private float attackRadius = 5F;
+    private float attackRadius = 2F;
     private bool playerDetected = false;
+    private float attackRange = 1F;
+    private bool readyToAttack = true;
+    private float attackCooldown = 1F;
 
 
     // self components
@@ -161,16 +164,45 @@ public class MummyAI : MonoBehaviour
         // set target to current player position
         navMeshAgent.SetDestination(Player.transform.position);
 
-        // if close enough to the player, attack
-        if (Vector3.Distance(transform.position, Player.transform.position) < attackRadius)
+        // if close enough to the player, attack (from head)
+        if (Vector3.Distance(Head.transform.position, Player.transform.position) < attackRadius)
         {
+            // set grasping animation
             grasp = true;
+
+            // cast a ray from the enemy forward direction and see if we hit the player
+            RaycastHit rayQuery;
+            bool collision = Physics.Raycast(Head.transform.position, transform.forward, out rayQuery, attackRange);
+
+            // ray hit an object
+            if (collision)
+            {
+                if (rayQuery.collider.tag == "Player" && readyToAttack) // hit the player, and can attack
+                {
+                    readyToAttack = false; // prevent continuous attack
+                    Invoke(nameof(ResetAttack), attackCooldown); // don't want the enemy attacking continuously, create cooldown to reset
+
+                    // reduce player health
+                    rayQuery.transform.gameObject.GetComponent<PlayerControl>().health--;
+                    
+                    Player.GetComponent<Rigidbody>().AddForce(transform.forward * 50F, ForceMode.Impulse);
+                }
+
+            }
+            
         }
         else
         {
             grasp = false;
         }
 
+    }
+
+
+
+    private void ResetAttack()
+    {
+        readyToAttack = true;
     }
 
 

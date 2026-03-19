@@ -101,7 +101,7 @@ public class LizardAI : MonoBehaviour
     {
         // if close enough to the player, start chasing them 
         // measure from top jaw, closest to eyes
-        if (Vector3.Distance(TopJaw.transform.position, Player.transform.position) < detectRadius)
+        if (Vector3.Distance(TopJaw.transform.position, Player.transform.position) < detectRadius && !playerDetected)
         {
 
             // find the vector pointing from self to the player

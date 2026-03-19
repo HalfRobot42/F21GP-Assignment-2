@@ -110,6 +110,14 @@ public class CameraControl : MonoBehaviour
                     ParticleClay.transform.position = rayQuery.point;
                     ParticleClay.Play(); 
                 }
+                else if (rayQuery.collider.tag == "ClayPot") // hit a clay pot
+                {
+                    ParticleClay.transform.position = rayQuery.point;
+                    ParticleClay.Play();
+
+                    // add a force
+                    rayQuery.transform.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 50F, ForceMode.Force);
+                }
                 else // hit a random object, probably a wall
                 {
                     ParticleEnvironment.transform.position = rayQuery.point;

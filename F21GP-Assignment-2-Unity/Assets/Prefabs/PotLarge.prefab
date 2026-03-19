@@ -2488,7 +2488,7 @@ GameObject:
   - component: {fileID: 8385621632228647515}
   m_Layer: 0
   m_Name: PotLarge
-  m_TagString: Clay
+  m_TagString: ClayPot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

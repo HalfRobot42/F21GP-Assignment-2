@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+//using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -31,7 +32,8 @@ public class MummyAI : MonoBehaviour
     public string areaName; // default area to wander around
 
     // enemy health
-    public float health = 5;
+    public float health = 5; // actual health value to reduce
+    private float maxHealth; // starting health
 
     private bool walking = true; // true if walking
     private bool grasp = false; // true if grasping
@@ -55,7 +57,6 @@ public class MummyAI : MonoBehaviour
 
     // self components
     private NavMeshAgent navMeshAgent;
-    private Rigidbody rigidBody;
 
 
     // variables for wandering (idle behaviour)
@@ -70,13 +71,15 @@ public class MummyAI : MonoBehaviour
     {
         // get self componenents
         navMeshAgent = GetComponent<NavMeshAgent>();
-        rigidBody = GetComponent<Rigidbody>();
     }
 
 
     private void Start()
     {
         Spell.SetActive(false); // disable spell effect on start
+
+        // set maxhealth to starting health value
+        maxHealth = health;
 
         // set new random target position
         walking = true;
@@ -128,14 +131,25 @@ public class MummyAI : MonoBehaviour
             // spawn a skeleton at our location
             GameObject RagDoll = Instantiate(Skeleton, transform.position, transform.rotation);
 
-            // apply a force to scatter the pieces, apply to each child in the ragdoll
+            // apply a random force to scatter the pieces, apply to each child in the ragdoll
             foreach (Transform child in RagDoll.transform)
             {
-                child.gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * Random.Range(5F,10F), ForceMode.Force);
+                // create a random direction vector
+                Vector3 forceDir = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1));
+                forceDir = forceDir.normalized;
+
+                float forceMag = Random.Range(5F, 10F);
+
+                //child.gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * Random.Range(5F,10F), ForceMode.Force);
+                child.gameObject.GetComponent<Rigidbody>().AddForce(forceDir * forceMag, ForceMode.Force);
             }  
 
             // set inactive
             gameObject.SetActive(false);
+        }
+        else if (health < maxHealth) // has taken damage at least ince
+        {
+            playerDetected = true; // chase the player
         }
     }
 
@@ -173,9 +187,6 @@ public class MummyAI : MonoBehaviour
         {
             // stop self
             navMeshAgent.ResetPath();
-            rigidBody.velocity = new Vector3(0, 0, 0);
-            rigidBody.angularVelocity = new Vector3(0, 0, 0);
-
             walking = false;
 
             // create a random amount of time to wait

@@ -24,7 +24,8 @@ public class LizardAI : MonoBehaviour
     public string areaName; // default area to wander around
 
     // enemy health
-    public float health = 5;
+    public float health = 5;  // actual health value to reduce
+    private float maxHealth; // starting health
 
     // stores if certain animations are active
     private bool walking = false; 
@@ -35,7 +36,7 @@ public class LizardAI : MonoBehaviour
     private float waveSpeed = 25F; // speed at which to wave the tail
     private bool waveDir = true; // keep track of waving direction (direction is arbitrary, but consistent)
 
-    private const float walkSpeedHigh = 150F; // speed to wave legs in when running
+    private const float walkSpeedHigh = 200F; // speed to wave legs in when running
     private const float walkSpeedLow = 35F; // speed to wave legs in when walking idle
     private float walkSpeed = walkSpeedLow;
     private bool walkDir = true;
@@ -55,7 +56,7 @@ public class LizardAI : MonoBehaviour
 
     // self components
     private NavMeshAgent navMeshAgent;
-    private Rigidbody rigidBody;
+    //private Rigidbody rigidBody;
 
 
     // variables for wandering (idle behaviour)
@@ -68,25 +69,26 @@ public class LizardAI : MonoBehaviour
 
     // player chase variables
     private bool playerDetected = false;
-    private bool playerDetectedPrevious = false;
-    private int playerDetectedCount = 0;
-    private float detectRadius = 5F;
-    private float targetError = 1F;//0.2F;
+    private float detectRadius = 7F;
+    private float attackRadius = 2.5F;
 
     // speed variables
-    private const float speedHigh = 2F; // when chasing the player
+    private const float speedHigh = 4F; // when chasing the player
     private const float speedLow = 0.5F; // idle walking speed
 
     private void Awake()
     {
         // get self componenents
         navMeshAgent = GetComponent<NavMeshAgent>();
-        rigidBody = GetComponent<Rigidbody>();
+        //rigidBody = GetComponent<Rigidbody>();
     }
 
     private void Start()
     {
         navMeshAgent.speed = speedLow; // walking speed
+
+        // set maxhealth to starting health value
+        maxHealth = health;
 
         // set new random target position
         walking = true;
@@ -97,14 +99,15 @@ public class LizardAI : MonoBehaviour
 
     private void Update()
     {
-
-        // check if player is close enough and there is a straight line
+        // if close enough to the player, start chasing them 
+        // measure from top jaw, closest to eyes
         if (Vector3.Distance(TopJaw.transform.position, Player.transform.position) < detectRadius)
         {
+
             // find the vector pointing from self to the player
-            // measure from top jaw, closest to eyes
             Vector3 rayVector = Player.transform.position - TopJaw.transform.position;
 
+            // create ray to check we have a line of sight to the player
             RaycastHit rayQuery;
             Physics.Raycast(TopJaw.transform.position, rayVector, out rayQuery, detectRadius);
 
@@ -112,62 +115,19 @@ public class LizardAI : MonoBehaviour
             {
                 playerDetected = true; // player is in line of sight
             }
-            else
-            {
-                playerDetected = false; // player is not in line of sight
-            }
         }
 
         if (playerDetected)
         {
-            if (!playerDetectedPrevious) // was previously wandering
-            {
-                playerDetectedCount++; // keep track of number of time we've seen the player
-
-                // start walking animation
-                walking = true;
-
-                // start running
-                walkSpeed = walkSpeedHigh;
-                navMeshAgent.speed = speedHigh;
-
-                // open jaw
-                bite = true;
-
-                // set target to current player position
-                navMeshAgent.SetDestination(Player.transform.position);
-            }
-            chasePlayer();
+            ChasePlayer(); // attack
         }
         else
         {
-            if (playerDetectedPrevious) // was previously chasing
-            {
-                Debug.Log("stopping");
-                // stop and wait
-                StopInPlace();
-                walking = false;
-
-                // close jaw
-                Debug.Log("closing jaw");
-                bite = false;
-
-                // set walking animation vars again
-                walkSpeed = walkSpeedLow;
-                navMeshAgent.speed = speedLow;
-            }
-
-            if (playerDetectedCount == 0)
-            {
-                Wander(); // idle actions, if we have not yet seen the player
-            }
-            
-
+            Wander(); // idle behaviour
         }
-            
-        Animate();
+        
 
-        playerDetectedPrevious = playerDetected; // update previous detected to current for next update
+        Animate();
 
         // check health and die if needed
         CheckHealth();
@@ -184,32 +144,35 @@ public class LizardAI : MonoBehaviour
             // set inactive
             gameObject.SetActive(false);
         }
-    }
-
-
-    void chasePlayer()
-    {
-        // when this function is called, target has already been set, need to monitor it
-        if (Vector3.Distance(transform.position, navMeshAgent.destination) < targetError) // check how close the agent is to it's current target (players previous positon)
+        else if (health < maxHealth) // has taken damage at least ince
         {
-            // agent is close enough
-
-            // stop and reset the player detect
-            StopInPlace();
-            walking = false;
-            playerDetected = false;
+            playerDetected = true; // chase the player
         }
     }
 
 
-    void StopInPlace()
+    void ChasePlayer()
     {
-        // stop self
-        navMeshAgent.ResetPath();
-        rigidBody.velocity = new Vector3(0, 0, 0);
-        rigidBody.angularVelocity = new Vector3(0, 0, 0);
-    }
+        // start walking animation
+        walking = true;
 
+        // start running
+        walkSpeed = walkSpeedHigh;
+        navMeshAgent.speed = speedHigh;
+
+        // set target to current player position
+        navMeshAgent.SetDestination(Player.transform.position);
+
+        // if close enough to the player, attack
+        if (Vector3.Distance(transform.position, Player.transform.position) < attackRadius)
+        {
+            bite = true;
+        }
+        else
+        {
+            bite = false;
+        }
+    }
 
     void Wander()
     {
@@ -221,7 +184,7 @@ public class LizardAI : MonoBehaviour
         if (distanceToTarget < wanderTargetError && !waiting)
         {
             // stop self
-            StopInPlace();
+            navMeshAgent.ResetPath();
 
             walking = false;
 
@@ -265,7 +228,6 @@ public class LizardAI : MonoBehaviour
 
         return finalPosition;
     }
-
 
 
     void Animate()

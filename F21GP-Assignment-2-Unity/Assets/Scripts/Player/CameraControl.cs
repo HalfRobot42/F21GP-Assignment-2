@@ -83,7 +83,6 @@ public class CameraControl : MonoBehaviour
 
             // ray hit an object
             if (collision) {
-
                 if (rayQuery.collider.tag == "Mummy") // hit an mummy
                 {
                     // teleport the particle system to the collision point

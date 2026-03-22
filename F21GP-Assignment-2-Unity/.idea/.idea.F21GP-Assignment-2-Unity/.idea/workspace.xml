@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a06e60f5-c3d0-40cd-a0d3-77ae0eb53473" name="Changes" comment="" />
+    <list default="true" id="a06e60f5-c3d0-40cd-a0d3-77ae0eb53473" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.F21GP-Assignment-2-Unity/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.F21GP-Assignment-2-Unity/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MazeLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MazeLevel.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,7 +32,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "MazeTest",
+    "git-widget-placeholder": "TOMB-LEVEL-JULIANO",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -85,6 +90,7 @@
       <workItem from="1772890695515" duration="839000" />
       <workItem from="1773055744363" duration="6000" />
       <workItem from="1773055753528" duration="4954000" />
+      <workItem from="1774189334539" duration="6487000" />
     </task>
     <servers />
   </component>

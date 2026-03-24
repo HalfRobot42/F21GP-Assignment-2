@@ -2178,7 +2178,8 @@ MonoBehaviour:
   LegFrontLeft: {fileID: 3398722150838355044}
   TopJaw: {fileID: 4136904127979813042}
   BottomJaw: {fileID: 1312675283219347124}
-  areaName: 
+  Player: {fileID: 4787488438498501165, guid: 397122a17e76b8d42bd20b4cbaa1c1a2, type: 3}
+  areaName: Walkable
 --- !u!65 &8342967221888019876
 BoxCollider:
   m_ObjectHideFlags: 0

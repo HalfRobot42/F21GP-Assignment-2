@@ -80,6 +80,12 @@ public class LizardAI : MonoBehaviour
 
     private void Start()
     {
+            // 1. ADD THIS LINE: Automatically find the player by their tag
+        if (Player == null)
+        {
+            Player = GameObject.FindGameObjectWithTag("Player");
+        }
+
         navMeshAgent.speed = speedLow; // walking speed
 
         // set new random target position

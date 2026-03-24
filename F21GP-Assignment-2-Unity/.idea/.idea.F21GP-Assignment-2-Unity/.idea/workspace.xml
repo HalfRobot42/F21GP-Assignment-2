@@ -6,7 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="a06e60f5-c3d0-40cd-a0d3-77ae0eb53473" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.F21GP-Assignment-2-Unity/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.F21GP-Assignment-2-Unity/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GoldSkull.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GoldSkull.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/KeySpawnTomb.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/KeySpawnTomb.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/TempleDoor.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/TempleDoor.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/TestPlayer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/TestPlayer.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/KeyRandomizerTesting.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/KeyRandomizerTesting.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/MazeLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MazeLevel.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MazeLevel/Animations/TempleDoor.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MazeLevel/Animations/TempleDoor.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MazeLevel/Animations/TempleDoorAnimation.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MazeLevel/Animations/TempleDoorAnimation.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SamplePlayer/MoveCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SamplePlayer/MoveCamera.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
@@ -26,22 +34,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "TOMB-LEVEL-JULIANO",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "configurable.group.editor",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;TOMB-LEVEL-JULIANO&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.editor&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="$USER_HOME$/Unity/Hub/Editor/2022.3.62f3/Editor/Unity" />
@@ -91,6 +99,9 @@
       <workItem from="1773055744363" duration="6000" />
       <workItem from="1773055753528" duration="4954000" />
       <workItem from="1774189334539" duration="6487000" />
+      <workItem from="1774265776295" duration="429000" />
+      <workItem from="1774266243410" duration="6453000" />
+      <workItem from="1774347851319" duration="7202000" />
     </task>
     <servers />
   </component>

@@ -6,31 +6,41 @@ using TMPro;
 public class PlayerInventory : MonoBehaviour
 {
     public int keysCollected = 0;
+     public bool hasEgg = false;
     
-    // 2. Add this variable to hold your UI Text
+    // Added variable to hold the UI Text
     public TMP_Text keyCounterText; 
 
     private void Start()
     {
-        // Update the text at the very start so it shows 0/3
+        // Updates the text at the very start so it shows present number of keys (0/3)
         UpdateKeyUI();
     }
 
     public void AddKey()
     {
         keysCollected++;
-        // 3. Update the UI every time a key is added
+        //Updates the UI every time a key is added
         UpdateKeyUI();
          Debug.Log("Key collected! Total: " + keysCollected);
 
     }
 
-    // A small function to handle the text update
+    // Handles the text update
     void UpdateKeyUI()
     {
         if (keyCounterText != null)
         {
             keyCounterText.text = "Keys: " + keysCollected + " / 3";
         }
+    }
+
+    // Function to collect the Egg
+    public void CollectEgg()
+    {
+        hasEgg = true;
+        Debug.Log("Sacred Egg Collected!");
+        if (NotificationManager.Instance != null)
+            NotificationManager.Instance.ShowNotification("You found the Sacred Egg!");
     }
 }

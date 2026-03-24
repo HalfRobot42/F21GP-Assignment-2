@@ -1392,7 +1392,7 @@ GameObject:
   - component: {fileID: 7277718666601632150}
   m_Layer: 0
   m_Name: Bat
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1428,7 +1428,6 @@ MonoBehaviour:
   WingLeft: {fileID: 1068087657796289686}
   WingRight: {fileID: 1929395124426791328}
   Body: {fileID: 827829926085484525}
-  Collider: {fileID: 2586109321068460488}
   Player: {fileID: 0}
   lightList: []
 --- !u!54 &6448586458410997196

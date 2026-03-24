@@ -6,6 +6,14 @@ TagManager:
   tags:
   - KeySpawnPosition
   - KeyObject
+  - Enemy
+  - Clay
+  - Mummy
+  - Lizard
+  - LizardDead
+  - Grass
+  - ClayPot
+  - ClayPotLarge
   layers:
   - Default
   - TransparentFX

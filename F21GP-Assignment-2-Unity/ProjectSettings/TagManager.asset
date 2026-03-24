@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - KeySpawnPosition
+  - KeyObject
   - Enemy
   - Clay
   - Mummy

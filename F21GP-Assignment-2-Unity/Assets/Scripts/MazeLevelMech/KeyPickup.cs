@@ -7,6 +7,7 @@ public class KeyPickup : MonoBehaviour
 {
     // define key pickup event here
     public static event Action OnPickup;
+    
     void OnTriggerEnter(Collider other)
     {
         // use 
@@ -18,5 +19,4 @@ public class KeyPickup : MonoBehaviour
             transform.parent.gameObject.SetActive(false); // disables GoldSkull (not destroyed)
         }
     }
-    
 }

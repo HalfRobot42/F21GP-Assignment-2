@@ -38,4 +38,6 @@ public class TempleDoorOpen : MonoBehaviour
             triggerEnterCount++;
         }
     }
+    
+    
 }

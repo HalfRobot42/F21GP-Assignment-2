@@ -24,6 +24,7 @@ public class Timer : MonoBehaviour
             if (timeLimit > 0)
             {
                 timeLimit -= Time.deltaTime;
+                timeLimit = Mathf.Max(timeLimit, 0); // ensure time ends at 0:00
                 UpdateTimerDisplay(timeLimit);    
             }
 
@@ -44,6 +45,6 @@ public class Timer : MonoBehaviour
         int minutes = Mathf.FloorToInt(time / 60);
         int seconds = Mathf.FloorToInt(time % 60);
 
-        timeDisplay.text = string.Format("Time remaining: {0: 00}: {1:00}", minutes, seconds);
+        timeDisplay.text = string.Format("{0:00}: {1:00}", minutes, seconds);
     }
 }

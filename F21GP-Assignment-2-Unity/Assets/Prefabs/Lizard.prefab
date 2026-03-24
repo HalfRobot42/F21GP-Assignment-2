@@ -2132,12 +2132,11 @@ GameObject:
   - component: {fileID: 7966397715882749328}
   - component: {fileID: 4430799955561929334}
   - component: {fileID: 8342967221888019876}
-  - component: {fileID: 170003610839649808}
   - component: {fileID: 1202986490767302206}
   - component: {fileID: 8680959580703544619}
   m_Layer: 0
   m_Name: Lizard
-  m_TagString: Untagged
+  m_TagString: Lizard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2178,7 +2177,11 @@ MonoBehaviour:
   LegFrontLeft: {fileID: 3398722150838355044}
   TopJaw: {fileID: 4136904127979813042}
   BottomJaw: {fileID: 1312675283219347124}
+  AttackPosition: {fileID: 7234915663888461817}
+  LizardDead: {fileID: 1099605076960886865, guid: 31b4195d3d0e6be42ad9a94aeea6040a, type: 3}
+  Player: {fileID: 0}
   areaName: 
+  health: 5
 --- !u!65 &8342967221888019876
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2200,33 +2203,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.625, y: 0.546875, z: 2.265625}
   m_Center: {x: 0, y: 0.2734375, z: -0.0390625}
---- !u!54 &170003610839649808
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1099605076960886865}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0.1
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!195 &1202986490767302206
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2240,7 +2216,7 @@ NavMeshAgent:
   m_Speed: 0.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 50
+  m_AngularSpeed: 100
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -12653,6 +12629,7 @@ Transform:
   - {fileID: 8699848035525089337}
   - {fileID: 6794323371684381068}
   - {fileID: 285698671717372660}
+  - {fileID: 5606874929084324020}
   m_Father: {fileID: 7966397715882749328}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &3863726631691750687
@@ -16502,6 +16479,37 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!1 &7234915663888461817
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5606874929084324020}
+  m_Layer: 0
+  m_Name: AttackPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5606874929084324020
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7234915663888461817}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3125, y: 0.390625, z: -0.1953125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6524022611983605011}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7246680914540135321
 GameObject:
   m_ObjectHideFlags: 0

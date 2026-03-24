@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Clay
+  - Mummy
+  - Lizard
+  - LizardDead
+  - Grass
+  - ClayPot
+  - ClayPotLarge
   layers:
   - Default
   - TransparentFX

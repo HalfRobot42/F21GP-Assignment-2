@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+//using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,9 +25,15 @@ public class MummyAI : MonoBehaviour
 
     public GameObject Spell;
 
+    public GameObject Skeleton;
+
     public GameObject Player; // player to chase
 
     public string areaName; // default area to wander around
+
+    // enemy health
+    public int health = 5; // actual health value to reduce
+    private int maxHealth; // starting health
 
     private bool walking = true; // true if walking
     private bool grasp = false; // true if grasping
@@ -42,13 +51,15 @@ public class MummyAI : MonoBehaviour
 
     // player vairables
     private float detectRadius = 10F;
-    private float attackRadius = 5F;
+    private float attackRadius = 2F;
     private bool playerDetected = false;
+    private float attackRange = 1F;
+    private bool readyToAttack = true;
+    private float attackCooldown = 1F;
 
 
     // self components
     private NavMeshAgent navMeshAgent;
-    private Rigidbody rigidBody;
 
 
     // variables for wandering (idle behaviour)
@@ -63,13 +74,15 @@ public class MummyAI : MonoBehaviour
     {
         // get self componenents
         navMeshAgent = GetComponent<NavMeshAgent>();
-        rigidBody = GetComponent<Rigidbody>();
     }
 
 
     private void Start()
     {
         Spell.SetActive(false); // disable spell effect on start
+
+        // set maxhealth to starting health value
+        maxHealth = health;
 
         // set new random target position
         walking = true;
@@ -80,15 +93,16 @@ public class MummyAI : MonoBehaviour
 
     void Update()
     {
-        // if close enough to the player, start chasing them
-        if (Vector3.Distance(transform.position, Player.transform.position) < detectRadius)
+        // if close enough to the player, start chasing them (measure from the head)
+        if (Vector3.Distance(Head.transform.position, Player.transform.position) < detectRadius && !playerDetected)
         {
+
             // find the vector pointing from self to the player
-            Vector3 rayVector = Player.transform.position - transform.position;
+            Vector3 rayVector = Player.transform.position - Head.transform.position;
 
             // create ray to check we have a line of sight to the player
             RaycastHit rayQuery;
-            Physics.Raycast(transform.position, rayVector, out rayQuery, detectRadius);
+            Physics.Raycast(Head.transform.position, rayVector, out rayQuery, detectRadius);
 
             if (rayQuery.collider.tag == "Player")
             {
@@ -98,32 +112,97 @@ public class MummyAI : MonoBehaviour
 
         if (playerDetected)
         {
-            ChasePlayer();
+            ChasePlayer(); // attack
         }
         else
         {
-            Wander();
+            Wander(); // idle behaviour
         }
 
+        // run animations
         Animate();
+
+        // check health and die if needed
+        CheckHealth();
+    }
+
+
+    void CheckHealth()
+    {
+        if (health <= 0) // die now
+        {
+            // spawn a skeleton at our location
+            GameObject RagDoll = Instantiate(Skeleton, transform.position, transform.rotation);
+
+            // apply a random force to scatter the pieces, apply to each child in the ragdoll
+            foreach (Transform child in RagDoll.transform)
+            {
+                // create a random direction vector
+                Vector3 forceDir = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1));
+                forceDir = forceDir.normalized;
+
+                float forceMag = Random.Range(5F, 10F);
+
+                //child.gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * Random.Range(5F,10F), ForceMode.Force);
+                child.gameObject.GetComponent<Rigidbody>().AddForce(forceDir * forceMag, ForceMode.Force);
+            }  
+
+            // set inactive
+            gameObject.SetActive(false);
+        }
+        else if (health < maxHealth) // has taken damage at least ince
+        {
+            playerDetected = true; // chase the player
+        }
     }
 
 
     void ChasePlayer()
     {
+        walking = true;
+
         // set target to current player position
         navMeshAgent.SetDestination(Player.transform.position);
 
-        // if close enough to the player, attack
-        if (Vector3.Distance(transform.position, Player.transform.position) < attackRadius)
+        // if close enough to the player, attack (from head)
+        if (Vector3.Distance(Head.transform.position, Player.transform.position) < attackRadius)
         {
+            // set grasping animation
             grasp = true;
+
+            // cast a ray from the enemy forward direction and see if we hit the player
+            RaycastHit rayQuery;
+            bool collision = Physics.Raycast(Head.transform.position, transform.forward, out rayQuery, attackRange);
+
+            // ray hit an object
+            if (collision)
+            {
+                if (rayQuery.collider.tag == "Player" && readyToAttack) // hit the player, and can attack
+                {
+                    readyToAttack = false; // prevent continuous attack
+                    Invoke(nameof(ResetAttack), attackCooldown); // don't want the enemy attacking continuously, create cooldown to reset
+
+                    // reduce player health
+                    rayQuery.transform.gameObject.GetComponent<PlayerControl>().health--;
+                    
+                    Player.GetComponent<Rigidbody>().AddForce(transform.forward * 50F, ForceMode.Impulse);
+                }
+
+            }
+            
         }
         else
         {
             grasp = false;
         }
 
+    }
+
+
+
+    private void ResetAttack()
+    {
+        readyToAttack = true;
     }
 
 
@@ -140,9 +219,6 @@ public class MummyAI : MonoBehaviour
         {
             // stop self
             navMeshAgent.ResetPath();
-            rigidBody.velocity = new Vector3(0, 0, 0);
-            rigidBody.angularVelocity = new Vector3(0, 0, 0);
-
             walking = false;
 
             // create a random amount of time to wait

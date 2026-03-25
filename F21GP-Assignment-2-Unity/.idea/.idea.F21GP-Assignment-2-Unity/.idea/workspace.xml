@@ -6,18 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a06e60f5-c3d0-40cd-a0d3-77ae0eb53473" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.F21GP-Assignment-2-Unity/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.F21GP-Assignment-2-Unity/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/CornerCorridorNew.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/CornerCorridorNew.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/DeadEndCorridorNew.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/DeadEndCorridorNew.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GoldSkull.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GoldSkull.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/LongCorridorNew.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/LongCorridorNew.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/ShortCorridorNew.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/ShortCorridorNew.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/TJunctionNew.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/TJunctionNew.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/KeyRandomizerTesting.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/KeyRandomizerTesting.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/MazeLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MazeLevel.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/MazeLevelMech/KeyPickup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MazeLevelMech/KeyPickup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MazeLevelMech/TempleDoorOpen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MazeLevelMech/TempleDoorOpen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,6 +96,7 @@
       <workItem from="1774347851319" duration="7202000" />
       <workItem from="1774356937859" duration="2376000" />
       <workItem from="1774376931623" duration="1278000" />
+      <workItem from="1774438216318" duration="3176000" />
     </task>
     <servers />
   </component>

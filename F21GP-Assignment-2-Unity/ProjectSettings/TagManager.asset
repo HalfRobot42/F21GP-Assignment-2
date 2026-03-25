@@ -14,6 +14,7 @@ TagManager:
   - Grass
   - ClayPot
   - ClayPotLarge
+  - KeyRespawnPosition
   layers:
   - Default
   - TransparentFX

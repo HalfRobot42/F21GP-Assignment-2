@@ -84,7 +84,7 @@ public class CameraControl : MonoBehaviour
 
             // cast a ray from the camera forward and see if we hit an enemy
             RaycastHit rayQuery;
-            bool collision = Physics.Raycast(transform.position, transform.forward, out rayQuery, shootRange);
+            bool collision = Physics.Raycast(transform.position, transform.forward, out rayQuery, shootRange, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
 
             // ray hit an object
             if (collision) {

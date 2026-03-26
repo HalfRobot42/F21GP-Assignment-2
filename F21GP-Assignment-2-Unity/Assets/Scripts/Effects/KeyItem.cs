@@ -15,7 +15,7 @@ public class KeyItem : MonoBehaviour
 
     private void PickUp()
     {
-        // Look for the inventory on the TestPlayer (the parent of the capsule)
+        // Look for the inventory on the Player (the parent of the capsule)
         if (playerInv == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("Player");

@@ -22,7 +22,7 @@ public class DoorOpenAnimation : MonoBehaviour
     
     void animateDoorOpen()
     {
-        // Debug.Log("OnDoorOpen triggered");
+        Debug.Log("OnDoorOpen triggered");
         if (mAnimator != null)
         {
             mAnimator.SetTrigger("OpenTrigger");

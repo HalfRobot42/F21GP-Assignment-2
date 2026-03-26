@@ -15,13 +15,13 @@ public class EscapeDoor : MonoBehaviour
         {
             PlayerInventory inventory = other.GetComponentInParent<PlayerInventory>();
 
-            if (inventory != null && inventory.hasEgg)
+            if (inventory != null && inventory.hasSkull)
             {
                 WinLevel();
             }
             else
             {
-                // Show error message if they don't have the egg
+                // Show error message if they don't have the skull
                 if (errorUI != null) errorUI.SetActive(true);
             }
         }
@@ -49,7 +49,7 @@ public class EscapeDoor : MonoBehaviour
         if (timer != null) timer.enabled = false;
 
         // 3. Disable Player Movement so they can't keep walking
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().enabled = false;
+        //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().enabled = false;
 
         Debug.Log("Victory!");
     }

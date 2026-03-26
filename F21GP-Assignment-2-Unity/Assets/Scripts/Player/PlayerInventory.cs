@@ -6,7 +6,7 @@ using TMPro;
 public class PlayerInventory : MonoBehaviour
 {
     public int keysCollected = 0;
-     public bool hasEgg = false;
+    public bool hasSkull = false;
     
     // Added variable to hold the UI Text
     public TMP_Text keyCounterText; 
@@ -22,7 +22,7 @@ public class PlayerInventory : MonoBehaviour
         keysCollected++;
         //Updates the UI every time a key is added
         UpdateKeyUI();
-         Debug.Log("Key collected! Total: " + keysCollected);
+        Debug.Log("Key collected! Total: " + keysCollected);
 
     }
 
@@ -36,11 +36,11 @@ public class PlayerInventory : MonoBehaviour
     }
 
     // Function to collect the Egg
-    public void CollectEgg()
+    public void CollectSkull()
     {
-        hasEgg = true;
-        Debug.Log("Sacred Egg Collected!");
+        hasSkull = true;
+        Debug.Log("Skull Collected!");
         if (NotificationManager.Instance != null)
-            NotificationManager.Instance.ShowNotification("You found the Sacred Egg!");
+            NotificationManager.Instance.ShowNotification("You found the Skull!");
     }
 }

@@ -12,7 +12,7 @@ public class EggItem : MonoBehaviour
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
         {
             PlayerInventory inv = GameObject.FindGameObjectWithTag("Player").GetComponentInParent<PlayerInventory>();
-            inv.CollectEgg();
+            inv.CollectSkull();
             
             if (InteractionUI.Instance != null) InteractionUI.Instance.Hide();
             Destroy(gameObject);

@@ -200,7 +200,7 @@ public class CameraControl : MonoBehaviour
 
         // need to rotate upwards until the euler angles wraps round to 0 again, can check this by seeing if the angle is greater than a low number
         // will stop when the angle is now between 0 and this low number
-        while (GunHolder.transform.localEulerAngles.x > 10) 
+        while (GunHolder.transform.localEulerAngles.x > 40) 
         {
             GunHolder.transform.Rotate(Time.deltaTime * recoilSpeed,0,0); // + x dir
             yield return null;

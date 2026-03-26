@@ -70,7 +70,7 @@ public class LizardAI : MonoBehaviour
 
     // player chase variables
     private bool playerDetected = false;
-    private float detectRadius = 7F;
+    private float detectRadius = 20F;
     private float biteRange = 2.5F;
     private float attackRange = 1F;
     private bool readyToAttack = true;

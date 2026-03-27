@@ -41,6 +41,7 @@ public class PlayerControl : MonoBehaviour
     // player health
     public int health = 5; // actual health value to reduce
     private int maxHealth; // starting health
+    public TMP_Text healthText; // text ui to update
 
     Vector3 moveDirection;
 
@@ -61,7 +62,8 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log(health);
+        //update health ui
+        healthText.text = "Health: " + health;
 
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         

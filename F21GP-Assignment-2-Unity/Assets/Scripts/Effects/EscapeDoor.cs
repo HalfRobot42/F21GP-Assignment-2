@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EscapeDoor : MonoBehaviour
 {
-   public GameObject errorUI;    // Drag "ErrorText" here
+   //public GameObject errorUI;    // Drag "ErrorText" here
     public GameObject victoryUI;  // Drag "VictoryText" here
     
     private bool levelFinished = false;
@@ -22,7 +22,7 @@ public class EscapeDoor : MonoBehaviour
             else
             {
                 // Show error message if they don't have the skull
-                if (errorUI != null) errorUI.SetActive(true);
+                //if (errorUI != null) errorUI.SetActive(true);
             }
         }
     }
@@ -32,7 +32,7 @@ public class EscapeDoor : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Hide the error message when they walk away from the door
-            if (errorUI != null) errorUI.SetActive(false);
+            //if (errorUI != null) errorUI.SetActive(false);
         }
     }
 
@@ -42,7 +42,7 @@ public class EscapeDoor : MonoBehaviour
         
         // 1. Show Victory UI
         if (victoryUI != null) victoryUI.SetActive(true);
-        if (errorUI != null) errorUI.SetActive(false);
+        //if (errorUI != null) errorUI.SetActive(false);
 
         // 2. Stop the Timer (If you have the Timer script on an object named "TimerManager")
         Timer timer = FindObjectOfType<Timer>();

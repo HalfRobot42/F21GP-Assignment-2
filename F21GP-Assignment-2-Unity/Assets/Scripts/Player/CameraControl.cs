@@ -14,8 +14,12 @@ public class CameraControl : MonoBehaviour
     public float sensX;
     public float sensY;
 
+    public bool holdingGun = true; // switch between gun and torch
+
     // gun animation
     public GameObject GunHolder; // gun to rotate (recoil) when shooting
+    public GameObject TorchHolder; // object with torch as child
+    public GameObject TorchLight; // object attatched to player to toggle
     public GameObject BarrelPlacement; // gun barrel location to move spark effect too
     public ParticleSystem ParticleBarrel; // the spark effect to spawn on the gun barrel
     public ParticleSystem ParticleEnemy; // the spark effect to spawn on the enemy (1 enemy type per level, change depending on the level)
@@ -52,6 +56,19 @@ public class CameraControl : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        if(holdingGun)
+        {
+            GunHolder.SetActive(true);
+            TorchHolder.SetActive(false);
+            TorchLight.SetActive(false);
+        }
+        else
+        {
+            GunHolder.SetActive(false);
+            TorchHolder.SetActive(true);
+            TorchLight.SetActive(true);
+        }
     }
     
 
@@ -76,7 +93,7 @@ public class CameraControl : MonoBehaviour
 
 
         // get left click input
-        if (Input.GetMouseButtonDown(0) && readyToShoot)
+        if (Input.GetMouseButtonDown(0) && readyToShoot && holdingGun)
         {
             readyToShoot = false; // prevent continuous shooting
             StartCoroutine(ShootAnimation()); // start shoot animation coroutine

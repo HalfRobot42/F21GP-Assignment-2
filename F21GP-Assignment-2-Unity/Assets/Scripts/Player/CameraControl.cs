@@ -15,6 +15,10 @@ public class CameraControl : MonoBehaviour
     public float sensY;
 
     public bool holdingGun = true; // switch between gun and torch
+    private const float lightLevelMax = 10;
+    public float lightLevel = lightLevelMax; // will decrease over time, if it runs out the bats may attack
+    public List<Transform> lightList; // list of all light sources in the level to relight the torch
+    private float lightRadius = 2.2F; // area around the light where we can relight the torch
 
     // gun animation
     public GameObject GunHolder; // gun to rotate (recoil) when shooting
@@ -57,17 +61,18 @@ public class CameraControl : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        if(holdingGun)
+        if(holdingGun) // player is in gun mode, show gun
         {
             GunHolder.SetActive(true);
+            // hide torch and light
             TorchHolder.SetActive(false);
             TorchLight.SetActive(false);
         }
         else
         {
             GunHolder.SetActive(false);
-            TorchHolder.SetActive(true);
-            TorchLight.SetActive(true);
+            //TorchHolder.SetActive(true);
+            //TorchLight.SetActive(true);
         }
     }
     
@@ -188,6 +193,49 @@ public class CameraControl : MonoBehaviour
             }
             
         }
+
+
+        if (!holdingGun) // player is in torch mode
+        {
+            Debug.Log(lightLevel);
+
+            if (lightLevel > 0) // if light level is above 0, show the torch
+            {
+                TorchHolder.SetActive(true);
+                TorchLight.SetActive(true);
+            }
+            else // below zero hide the torch
+            {
+                TorchHolder.SetActive(false); 
+                TorchLight.SetActive(false);
+            }
+
+
+            //Debug.Log(Vector3.Distance(transform.position, lightList[1].transform.position));
+
+            // iterate through the light sources in the level
+            bool refill = false;
+            for (int i = 0; i < lightList.Count; i++)
+            {
+
+                // if within the set radius around this light, 
+                if (Vector3.Distance(transform.position, lightList[i].transform.position) < lightRadius)
+                {
+                    refill = true;
+                    lightLevel = lightLevelMax;
+                }
+            }
+
+            if (!refill) // if we didn't refill the light level, reduce it
+            {
+                if (lightLevel > 0) // only reduce if above 0
+                {
+                    lightLevel -= 1F * Time.deltaTime;
+                }
+                
+            }
+        }
+
 
         // teleport the barrel effect to the barrel of the gun
         ParticleBarrel.transform.position = BarrelPlacement.transform.position;

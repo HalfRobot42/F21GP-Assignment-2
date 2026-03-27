@@ -12,6 +12,7 @@ public class BatAI : MonoBehaviour
     public GameObject Body;
 
     public GameObject Player; // player target
+    public GameObject PlayerCamera; // player camera object, has player light value
     public List<Transform> lightList; // list of all other light sources in the level
 
     private float batHeightTopRange = 2.5F;
@@ -21,6 +22,7 @@ public class BatAI : MonoBehaviour
     // the radius at which to avoid the lights and player
     private float lightRadius = 2.5F;
     private float playerRadius = 2.5F;
+    private float attackRadius = 1.5F; // distance at which can attack the player
 
     private float flapSpeed = 1000F; 
     private float bobSpeed = 0.5F; // how fast the bat "bobs" up and down
@@ -65,11 +67,23 @@ public class BatAI : MonoBehaviour
         // if within the light radius around the player, apply a force
         if (Vector3.Distance(selfPlanePosition, playerPlanePosition) < playerRadius)
         {
-            // find the vector pointing from the player to self
-            Vector3 forceVector = selfPlanePosition - playerPlanePosition;
+            if (PlayerCamera.GetComponentInChildren<CameraControl>().lightLevel > 0) // player has an active torch, push the bat away
+            {
+                // find the vector pointing from the player to self
+                Vector3 forceVector = selfPlanePosition - playerPlanePosition;
 
-            // apply force to rigidbody
-            rigidBody.AddForce(forceVector * 0.2F, ForceMode.Force);
+                // apply force to rigidbody
+                rigidBody.AddForce(forceVector * 2F, ForceMode.Force); //0.2F
+            }
+            else // can attack the player
+            {
+                if (Vector3.Distance(selfPlanePosition, playerPlanePosition) < attackRadius) // close enough to attack
+                {
+                    Player.GetComponent<PlayerControl>().health--; // reduce player health
+                    Player.GetComponent<Rigidbody>().AddForce(transform.forward * 30F, ForceMode.Impulse); // apply a small force to the player
+                }
+            }
+            
         }
 
         // iterate through the other light sources in the level
@@ -84,7 +98,7 @@ public class BatAI : MonoBehaviour
                 Vector3 forceVector = selfPlanePosition - lightPlanePosition;
 
                 // apply force to rigidbody
-                rigidBody.AddForce(forceVector * 0.2F, ForceMode.Force);
+                rigidBody.AddForce(forceVector * 2F, ForceMode.Force); //0.2F
             }
         }
     }

@@ -42,12 +42,12 @@ public class MummyAI : MonoBehaviour
 
     private float swaySpeed = 2.5F;
     private bool swayDir = true; // keep track of swaying direction
-    private float walkSpeed = 20F;
+    private float walkSpeed = 60F;//20F;
     private bool walkDir = true;
 
     // ranges for animations
     private float swayRange = 5;
-    private float walkRange = 7.5F;
+    private float walkRange = 20F;//7.5F;
 
     // player vairables
     private float detectRadius = 10F;

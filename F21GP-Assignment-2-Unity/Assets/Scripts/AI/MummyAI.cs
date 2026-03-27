@@ -32,7 +32,7 @@ public class MummyAI : MonoBehaviour
     public string areaName; // default area to wander around
 
     // enemy health
-    public int health = 5; // actual health value to reduce
+    public int health; // actual health value to reduce
     private int maxHealth; // starting health
 
     private bool walking = true; // true if walking
@@ -51,7 +51,7 @@ public class MummyAI : MonoBehaviour
 
     // player vairables
     private float detectRadius = 10F;
-    private float attackRadius = 2F;
+    private float attackRadius = 4F;
     private bool playerDetected = false;
     private float attackRange = 1F;
     private bool readyToAttack = true;
@@ -81,13 +81,16 @@ public class MummyAI : MonoBehaviour
     {
         Spell.SetActive(false); // disable spell effect on start
 
-        // set maxhealth to starting health value
-        maxHealth = health;
-
         // set new random target position
         walking = true;
         currentTarget = FindRandomPosition();
         navMeshAgent.SetDestination(currentTarget);
+
+        // set health
+        health = Random.Range(1,3);
+
+        // set maxhealth to starting health value
+        maxHealth = health;
     }
 
 

@@ -31,6 +31,9 @@ public class MummyAI : MonoBehaviour
 
     public string areaName; // default area to wander around
 
+    // sound effect vars
+    public AudioClip punchSound;
+
     // enemy health
     public int health; // actual health value to reduce
     private int maxHealth; // starting health
@@ -184,6 +187,9 @@ public class MummyAI : MonoBehaviour
                 {
                     readyToAttack = false; // prevent continuous attack
                     Invoke(nameof(ResetAttack), attackCooldown); // don't want the enemy attacking continuously, create cooldown to reset
+
+                    // play punch sound
+                    AudioSource.PlayClipAtPoint(punchSound, transform.position, 1.0F);
 
                     // reduce player health
                     rayQuery.transform.gameObject.GetComponent<PlayerControl>().health--;

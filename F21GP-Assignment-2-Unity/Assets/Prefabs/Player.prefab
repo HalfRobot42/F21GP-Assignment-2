@@ -217,6 +217,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaba473dbc4bd7b42851a75a9a864b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkingGrassSound: {fileID: 8300000, guid: be236e3b1fe250242b6b24747468d2cb, type: 3}
+  walkingStoneSound: {fileID: 8300000, guid: 12d3906d58e99724fa023dc593dff3eb, type: 3}
+  walkingSandSound: {fileID: 8300000, guid: b6f857d8f996b184c9a3aef5aea0b722, type: 3}
+  playerAudioSource: {fileID: 0}
   moveSpeed: 5
   groundDrag: 0.4
   jumpForce: 12
@@ -228,6 +232,7 @@ MonoBehaviour:
     m_Bits: 8
   orientation: {fileID: 8406914762114016259}
   health: 5
+  healthText: {fileID: 0}
 --- !u!114 &387199523147568488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,7 +247,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keysCollected: 0
   hasSkull: 0
+  needsKeys: 1
   keyCounterText: {fileID: 0}
+  skullCounterText: {fileID: 0}
 --- !u!114 &7759679131772583881
 MonoBehaviour:
   m_ObjectHideFlags: 0

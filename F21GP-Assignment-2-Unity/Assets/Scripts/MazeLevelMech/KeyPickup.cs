@@ -13,7 +13,10 @@ public class KeyPickup : MonoBehaviour
     private PlayerInventory playerInv;
 
     private int triggerEnterCount = 0;
-    
+
+    public AudioClip pickupSound;
+    public AudioClip placeSound;
+
     private void OnEnable()
     {
         TempleDoorOpen.OnDoorOpen += placeKey;
@@ -69,6 +72,9 @@ public class KeyPickup : MonoBehaviour
         {
             playerInv.CollectSkull();
 
+            // pickup sound
+            AudioSource.PlayClipAtPoint(pickupSound, transform.position, 1.0F);
+
             // Tell the UI Instance to hide
             if (InteractionUI.Instance != null) InteractionUI.Instance.Hide();
 
@@ -112,5 +118,8 @@ public class KeyPickup : MonoBehaviour
         transform.parent.gameObject.SetActive(true);
         // keySpawnPos is an array with one element where spawn position is
         transform.parent.position = keySpawnPos[0].transform.position;
+
+        // place sound
+        AudioSource.PlayClipAtPoint(placeSound, transform.position, 1.0F);
     }
 }

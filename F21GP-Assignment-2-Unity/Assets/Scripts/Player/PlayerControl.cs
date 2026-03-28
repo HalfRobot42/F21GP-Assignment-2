@@ -9,6 +9,15 @@ using System;
 
 public class PlayerControl : MonoBehaviour
 {
+
+    public AudioClip walkingGrassSound;
+    public AudioClip walkingStoneSound;
+    public AudioClip walkingSandSound;
+    public AudioSource playerAudioSource;
+    private bool readyToPlayWalk = true;
+    private float walkSoundCooldown = 0.4F;
+
+
     [Header("Movement")]
     public float moveSpeed;
 
@@ -69,9 +78,11 @@ public class PlayerControl : MonoBehaviour
         
         KeyboardInput();
         SpeedControl();
-        
+
+        WalkingSound();
+
         // handle drag
-        if(grounded)
+        if (grounded)
         {
             rb.drag = groundDrag;
         }
@@ -147,5 +158,44 @@ public class PlayerControl : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
+    }
+
+
+    private void WalkingSound()
+    {
+        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // get horizontal velocity
+
+        if (grounded && (horizontalInput != 0 || verticalInput != 0) && (flatVel.magnitude > 0.1))
+        {
+            if (readyToPlayWalk)
+            {
+                // figure out what we're walking on
+                RaycastHit rayQuery;
+                Physics.Raycast(transform.position, Vector3.down, out rayQuery, playerHeight * 0.5f + 0.2f, whatIsGround);
+
+                if(rayQuery.collider.tag == "Grass") // player is on grass
+                {
+                    playerAudioSource.PlayOneShot(walkingGrassSound, 1.0F); // walk on grass
+                }
+                else if (rayQuery.collider.tag == "Sand") // player is on sand
+                {
+                    playerAudioSource.PlayOneShot(walkingSandSound, 1.0F); // walk on sand
+                }
+                else
+                {
+                    playerAudioSource.PlayOneShot(walkingStoneSound, 1.0F); // default to stone
+                }
+
+                // need to delay sound affect
+                readyToPlayWalk = false;
+                Invoke(nameof(ResetWalkingSound), walkSoundCooldown); 
+            }
+            
+        }
+    }
+
+    private void ResetWalkingSound()
+    {
+        readyToPlayWalk = true;
     }
 }

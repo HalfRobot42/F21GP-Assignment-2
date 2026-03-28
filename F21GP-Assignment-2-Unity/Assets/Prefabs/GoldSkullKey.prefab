@@ -4708,6 +4708,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keySpawnPos: []
+  pickupSound: {fileID: 8300000, guid: 0cf3ebc62049fbb488a86608b8eabbc7, type: 3}
+  placeSound: {fileID: 8300000, guid: 2ace74bd045d55b4891aa5deeb3f70fe, type: 3}
 --- !u!1 &8728194951880860942
 GameObject:
   m_ObjectHideFlags: 0

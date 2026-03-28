@@ -388,6 +388,7 @@ Transform:
   - {fileID: 1171592911712554720}
   - {fileID: 2438372687613128820}
   - {fileID: 3315465338281666029}
+  - {fileID: 2604265731582828513}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4249091262939864768
@@ -423,6 +424,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab4b4c44a4348d19090ee086954669ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openSound: {fileID: 8300000, guid: 9fdf8cdd8e49ff94ca60b14210eac458, type: 3}
+  doorCentre: {fileID: 4462155166279525098}
+--- !u!1 &4462155166279525098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2604265731582828513}
+  m_Layer: 0
+  m_Name: DoorCentre
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2604265731582828513
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4462155166279525098}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.97, y: 23.69, z: 0.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 442032869600569924}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7079312362585842075
 GameObject:
   m_ObjectHideFlags: 0

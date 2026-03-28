@@ -4,21 +4,19 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager Instance;
+    // This "Static Instance" allows any script to find this UI instantly
+    //public static SoundManager Instance;
 
-    public AudioSource musicSource;
+    public AudioSource levelAmbianceSource;
 
-    public AudioSource soundEffectSource;
+    public AudioClip levelAmbiance;
 
-    public AudioClip levelMusic;
+    private void Start()
+    {
+        //PlayAmbiance();
+    }
 
-    public AudioClip pickupSound;
-
-    public AudioClip enemyDeathSound;
-
-    public AudioClip buttonClickSound;
-    public AudioClip gameOverSound;
-
+    /*
     void Awake()
     {
         if (Instance == null)
@@ -31,22 +29,24 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    */
 
     /*
     This method plays the music in the game.
     */
-    public void PlayMusic(AudioClip clip)
+    public void PlayAmbiance()
     {
-        musicSource.clip = clip;
-        musicSource.Play();
+        levelAmbianceSource.clip = levelAmbiance;
+        levelAmbianceSource.loop = true;
+        levelAmbianceSource.Play();
     }
 
     /*
     This method plays a sound effect in the game.
     */
-    public void PlaySoundEffect(AudioClip clip)
+    public void PlaySoundEffect(AudioClip clip, Vector3 pos)
     {
-        soundEffectSource.PlayOneShot(clip);
+        AudioSource.PlayClipAtPoint(clip, pos);
     }
     
 }

@@ -30,6 +30,11 @@ public class CameraControl : MonoBehaviour
     public ParticleSystem ParticleClay; // the spark effect to spawn on clay items
     public ParticleSystem ParticleEnvironment; // the spark effect to spawn on the environment
 
+    // sound effects
+    public AudioClip gunShotSound;
+    public AudioClip enemyShotSound;
+    public AudioClip clayPotSound;
+
     // environment destruction
     public GameObject PotRagdoll;
     public GameObject PotLargeRagdoll;
@@ -58,6 +63,9 @@ public class CameraControl : MonoBehaviour
 
     private void Start()
     {
+        // set global volume to max
+        AudioListener.volume = 1.0F;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -102,7 +110,7 @@ public class CameraControl : MonoBehaviour
         {
             readyToShoot = false; // prevent continuous shooting
             StartCoroutine(ShootAnimation()); // start shoot animation coroutine
-            Invoke(nameof(ResetShoot), shootCooldown); // don't wan the player shooting continuously, create cooldown to reset
+            Invoke(nameof(ResetShoot), shootCooldown); // don't want the player shooting continuously, create cooldown to reset
 
             // cast a ray from the camera forward and see if we hit an enemy
             RaycastHit rayQuery;
@@ -116,13 +124,17 @@ public class CameraControl : MonoBehaviour
                     ParticleEnemy.transform.position = rayQuery.point;
                     ParticleEnemy.Play(); // play spark animation
 
+                    AudioSource.PlayClipAtPoint(enemyShotSound, rayQuery.point, 1.0F); // play enemy sound effect
+
                     // reduce enemy health
                     rayQuery.transform.gameObject.GetComponent<MummyAI>().health--;
                 }
                 else if (rayQuery.collider.tag == "Lizard") // hit a lizard
                 {
                     ParticleEnemy.transform.position = rayQuery.point;
-                    ParticleEnemy.Play(); 
+                    ParticleEnemy.Play();
+
+                    AudioSource.PlayClipAtPoint(enemyShotSound, rayQuery.point, 1.0F); // play enemy sound effect
 
                     // reduce enemy health
                     rayQuery.transform.gameObject.GetComponent<LizardAI>().health--;
@@ -141,6 +153,8 @@ public class CameraControl : MonoBehaviour
                 {
                     ParticleClay.transform.position = rayQuery.point;
                     ParticleClay.Play();
+
+                    AudioSource.PlayClipAtPoint(clayPotSound, rayQuery.point, 1.0F); // play clay pot breaking sound effect
 
                     // replace the pot with a ragdoll
                     // spawn a ragdoll pot at the pots location
@@ -165,6 +179,8 @@ public class CameraControl : MonoBehaviour
                 {
                     ParticleClay.transform.position = rayQuery.point;
                     ParticleClay.Play();
+
+                    AudioSource.PlayClipAtPoint(clayPotSound, rayQuery.point, 1.0F); // play clay pot breaking sound effect
 
                     // replace the pot with a ragdoll
                     // spawn a ragdoll pot at the pots location
@@ -250,6 +266,9 @@ public class CameraControl : MonoBehaviour
 
     IEnumerator ShootAnimation()
     {
+        // play shoot sound
+        AudioSource.PlayClipAtPoint(gunShotSound, BarrelPlacement.transform.position); 
+
         // teleport the particle effect to the barrel of the gun
         ParticleBarrel.transform.position = BarrelPlacement.transform.position;
         ParticleBarrel.Play(); // play spark animation

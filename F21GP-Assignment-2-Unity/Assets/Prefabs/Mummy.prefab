@@ -418,6 +418,7 @@ MonoBehaviour:
   Skeleton: {fileID: 690804409672339342, guid: 3ceada1e4fd71f04d99c806fd7feebff, type: 3}
   Player: {fileID: 0}
   areaName: 
+  punchSound: {fileID: 8300000, guid: 89e26cfab213945a89116a1464e097d7, type: 3}
   health: 2
 --- !u!65 &7294812846750197495
 BoxCollider:

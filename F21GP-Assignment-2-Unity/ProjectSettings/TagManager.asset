@@ -15,6 +15,9 @@ TagManager:
   - ClayPot
   - ClayPotLarge
   - KeyRespawnPosition
+  - InteractionUI
+  - Stone
+  - Sand
   layers:
   - Default
   - TransparentFX

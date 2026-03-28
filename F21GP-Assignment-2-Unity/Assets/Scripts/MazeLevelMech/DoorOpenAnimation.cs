@@ -5,7 +5,9 @@ using UnityEngine;
 public class DoorOpenAnimation : MonoBehaviour
 {
     private Animator mAnimator;
-    
+    public AudioClip openSound;
+    public GameObject doorCentre;
+
     private void OnEnable()
     {
         TempleDoorOpen.OnDoorOpen += animateDoorOpen;
@@ -26,6 +28,7 @@ public class DoorOpenAnimation : MonoBehaviour
         if (mAnimator != null)
         {
             mAnimator.SetTrigger("OpenTrigger");
+            AudioSource.PlayClipAtPoint(openSound, doorCentre.transform.position, 1.0F);
         }
     }
 

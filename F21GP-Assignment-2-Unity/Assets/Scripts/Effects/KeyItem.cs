@@ -4,6 +4,7 @@ public class KeyItem : MonoBehaviour
 {
     private bool isPlayerInReach = false;
     private PlayerInventory playerInv;
+    public AudioClip pickupSound;
 
     void Update()
     {
@@ -25,7 +26,10 @@ public class KeyItem : MonoBehaviour
         if (playerInv != null)
         {
             playerInv.AddKey();
-            
+
+            // pickup sound
+            AudioSource.PlayClipAtPoint(pickupSound, transform.position, 1.0F);
+
             // Tell the UI Instance to hide
             if (InteractionUI.Instance != null) InteractionUI.Instance.Hide();
 

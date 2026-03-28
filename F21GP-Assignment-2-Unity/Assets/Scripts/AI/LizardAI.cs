@@ -80,6 +80,10 @@ public class LizardAI : MonoBehaviour
     private const float speedHigh = 4F; // when chasing the player
     private const float speedLow = 0.5F; // idle walking speed
 
+    // sound effect vars
+    private bool roared = false; // only want to roar once
+    public AudioClip roarSound;
+
     private void Awake()
     {
         // get self componenents
@@ -171,6 +175,13 @@ public class LizardAI : MonoBehaviour
         if (Vector3.Distance(AttackPosition.transform.position, Player.transform.position) < biteRange)
         {
             bite = true;
+
+            // play roar sound effect
+            if (!roared)
+            {
+                AudioSource.PlayClipAtPoint(roarSound, transform.position, 1.0F);
+                roared = true;
+            }
 
             // cast a ray from the enemy forward direction and see if we hit the player
             RaycastHit rayQuery;

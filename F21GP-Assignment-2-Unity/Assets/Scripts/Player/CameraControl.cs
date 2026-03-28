@@ -19,6 +19,7 @@ public class CameraControl : MonoBehaviour
     public float lightLevel = lightLevelMax; // will decrease over time, if it runs out the bats may attack
     public List<Transform> lightList; // list of all light sources in the level to relight the torch
     private float lightRadius = 2.2F; // area around the light where we can relight the torch
+    public TMP_Text lightText; // text ui to update
 
     // gun animation
     public GameObject GunHolder; // gun to rotate (recoil) when shooting
@@ -31,9 +32,15 @@ public class CameraControl : MonoBehaviour
     public ParticleSystem ParticleEnvironment; // the spark effect to spawn on the environment
 
     // sound effects
+    public AudioClip ambience;
     public AudioClip gunShotSound;
     public AudioClip enemyShotSound;
     public AudioClip clayPotSound;
+    public AudioClip burningSound;
+    public float ambienceVolume = 0.2F;
+
+    private AudioSource ambienceSource;
+    private AudioSource soundSource;
 
     // environment destruction
     public GameObject PotRagdoll;
@@ -66,6 +73,19 @@ public class CameraControl : MonoBehaviour
         // set global volume to max
         AudioListener.volume = 1.0F;
 
+        // get and setup audio source components
+        ambienceSource = GetComponents<AudioSource>()[0];
+        soundSource = GetComponents<AudioSource>()[1];
+
+        ambienceSource.clip = ambience;
+        ambienceSource.loop = true;
+        ambienceSource.volume = ambienceVolume;
+        ambienceSource.Play();
+
+        soundSource.clip = burningSound;
+        soundSource.loop = true;
+        soundSource.volume = 1F;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -81,6 +101,8 @@ public class CameraControl : MonoBehaviour
             GunHolder.SetActive(false);
             //TorchHolder.SetActive(true);
             //TorchLight.SetActive(true);
+
+            lightText.gameObject.SetActive(true);
         }
     }
     
@@ -213,17 +235,28 @@ public class CameraControl : MonoBehaviour
 
         if (!holdingGun) // player is in torch mode
         {
-            Debug.Log(lightLevel);
+            //Debug.Log(lightLevel);
+            lightText.text = "Torch: "+(int)lightLevel;
 
             if (lightLevel > 0) // if light level is above 0, show the torch
             {
                 TorchHolder.SetActive(true);
                 TorchLight.SetActive(true);
+
+                if (!soundSource.isPlaying)
+                {
+                    soundSource.Play();
+                }
             }
             else // below zero hide the torch
             {
                 TorchHolder.SetActive(false); 
                 TorchLight.SetActive(false);
+
+                if (soundSource.isPlaying)
+                {
+                    soundSource.Stop();
+                }
             }
 
 

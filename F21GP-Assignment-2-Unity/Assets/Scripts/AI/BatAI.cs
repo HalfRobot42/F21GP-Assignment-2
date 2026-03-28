@@ -33,6 +33,16 @@ public class BatAI : MonoBehaviour
     private float flapBottomRange = 300;
 
 
+    // sounds
+    public AudioClip flapSound;
+    public AudioClip attackSound;
+    private bool readyToPlayFlap = true;
+    private float flapSoundCooldown = 15.5F;
+
+    private bool readyToAttack = true;
+    private float attackCooldown = 1F;
+
+
     // self components
     private NavMeshAgent navMeshAgent;
     private Rigidbody rigidBody;
@@ -53,6 +63,17 @@ public class BatAI : MonoBehaviour
     {
         ChasePlayer();
         Animate();
+
+
+        // play flap
+        if (readyToPlayFlap)
+        {
+            AudioSource.PlayClipAtPoint(flapSound, transform.position, 0.4F);
+
+            // need to delay sound affect
+            readyToPlayFlap = false;
+            Invoke(nameof(ResetFlapSound), flapSoundCooldown);
+        }
     }
 
     void ChasePlayer()
@@ -77,10 +98,15 @@ public class BatAI : MonoBehaviour
             }
             else // can attack the player
             {
-                if (Vector3.Distance(selfPlanePosition, playerPlanePosition) < attackRadius) // close enough to attack
+                if (Vector3.Distance(selfPlanePosition, playerPlanePosition) < attackRadius && readyToAttack) // close enough to attack
                 {
                     Player.GetComponent<PlayerControl>().health--; // reduce player health
                     Player.GetComponent<Rigidbody>().AddForce(transform.forward * 30F, ForceMode.Impulse); // apply a small force to the player
+
+                    readyToAttack = false; // prevent continuous attack
+                    Invoke(nameof(ResetAttack), attackCooldown); // don't want the enemy attacking continuously, create cooldown to reset
+
+                    AudioSource.PlayClipAtPoint(attackSound, transform.position, 1F); // play attack sound
                 }
             }
             
@@ -101,6 +127,11 @@ public class BatAI : MonoBehaviour
                 rigidBody.AddForce(forceVector * 2F, ForceMode.Force); //0.2F
             }
         }
+    }
+
+    private void ResetAttack()
+    {
+        readyToAttack = true;
     }
 
 
@@ -159,6 +190,12 @@ public class BatAI : MonoBehaviour
         }
 
 
-    }       
+    }
+
+
+    private void ResetFlapSound()
+    {
+        readyToPlayFlap = true;
+    }
 
 }

@@ -1429,7 +1429,10 @@ MonoBehaviour:
   WingRight: {fileID: 1929395124426791328}
   Body: {fileID: 827829926085484525}
   Player: {fileID: 0}
+  PlayerCamera: {fileID: 0}
   lightList: []
+  flapSound: {fileID: 8300000, guid: 0bb5aa2a4d9b3a340820830ac4b9fc95, type: 3}
+  attackSound: {fileID: 8300000, guid: 309131e9f00802645854607ca4b50cf4, type: 3}
 --- !u!54 &6448586458410997196
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1438,7 +1441,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3629885356017139467}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0.1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1467,7 +1470,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 1479372276
   m_Radius: 0.3
-  m_Speed: 0.5
+  m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

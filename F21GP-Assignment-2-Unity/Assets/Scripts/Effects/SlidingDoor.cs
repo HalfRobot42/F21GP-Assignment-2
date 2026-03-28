@@ -5,7 +5,11 @@ public class SlidingDoor : MonoBehaviour
 {
     public Transform doorTransform; 
     public GameObject lockedPrompt; // Drag your "LockedDoorPrompt" UI here
-    
+
+    public AudioClip openingSound;
+    public AudioClip closingSound;
+    private bool opened = false;
+
     [Header("Movement Settings")]
     public Vector3 openOffset = new Vector3(5f, 0f, 0f);
     public float speed = 3f;
@@ -47,6 +51,12 @@ public class SlidingDoor : MonoBehaviour
                 targetPosition = closedPosition + openOffset;
                 if (lockedPrompt != null) lockedPrompt.SetActive(false);
                 Debug.Log("Door Unlocked!");
+
+                if (!opened)
+                {
+                    AudioSource.PlayClipAtPoint(openingSound, transform.position, 1.0F);
+                    opened = true;
+                }
             }
             // If NOT enough keys, show the "Locked" message
             else
@@ -66,6 +76,12 @@ public class SlidingDoor : MonoBehaviour
 
             // Close the door (Only if it's currently open)
             targetPosition = closedPosition;
+
+            if (opened)
+            {
+                AudioSource.PlayClipAtPoint(closingSound, transform.position, 1.0F);
+                opened = false;
+            }
         }
     }
 }

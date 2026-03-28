@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/FINAL-GAME/VegetationLevel-FINAL.unity
+    guid: e2f6f0f5c0f35f04e9e2d6080e533e43
+  - enabled: 1
+    path: Assets/Scenes/FINAL-GAME/MazeLevel-FINAL.unity
+    guid: 4ed0c7b5ea2a39e40a9b7abf54840777
+  - enabled: 1
+    path: Assets/Scenes/FINAL-GAME/CaveLevel-FINAL.unity
+    guid: e731452151882d34fbe9797cf1049109
   m_configObjects: {}

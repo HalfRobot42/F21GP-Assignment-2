@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class KeySpawn : MonoBehaviour
 {
-    public GameObject keyPrefab;
+    //public GameObject keyPrefab;
+    public GameObject skullKey;
     public GameObject skullPrefab;
     private int spawnPointIndex;
 
@@ -22,7 +23,9 @@ public class KeySpawn : MonoBehaviour
                 Instantiate(skullPrefab, keySpawnPoints[i].transform.position, Quaternion.identity);
             }
         }
-        Instantiate(keyPrefab,keySpawnPoints[spawnPointIndex].transform.position,Quaternion.identity);
+        //Instantiate(keyPrefab,keySpawnPoints[spawnPointIndex].transform.position,Quaternion.identity);
+        skullKey.transform.position = keySpawnPoints[spawnPointIndex].transform.position;
+        skullKey.transform.rotation = Quaternion.identity;
     }
 
     

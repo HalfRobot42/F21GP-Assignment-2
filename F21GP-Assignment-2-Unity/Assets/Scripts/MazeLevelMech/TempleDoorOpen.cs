@@ -30,6 +30,7 @@ public class TempleDoorOpen : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("trigcount:"+triggerEnterCount);
         if (other.CompareTag("Player") && isOpen == true && triggerEnterCount == 0)
         {
             OnDoorOpen?.Invoke();

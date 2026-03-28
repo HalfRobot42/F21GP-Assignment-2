@@ -7,7 +7,8 @@ public class KeyPickup : MonoBehaviour
 {
     // define key pickup event here
     public static event Action OnPickup;
-    public GameObject[] keySpawnPos;
+    //public GameObject[] keySpawnPos;
+    public GameObject keySpawnPos;
 
     private bool isPlayerInReach = false;
     private PlayerInventory playerInv;
@@ -16,6 +17,12 @@ public class KeyPickup : MonoBehaviour
 
     public AudioClip pickupSound;
     public AudioClip placeSound;
+
+
+    void Awake()
+    {
+        DontDestroyOnLoad(transform.parent.gameObject);
+    }
 
     private void OnEnable()
     {
@@ -29,10 +36,10 @@ public class KeyPickup : MonoBehaviour
 
     void Start()
     {
-        if (keySpawnPos == null || keySpawnPos.Length == 0)
-        {
-            keySpawnPos = GameObject.FindGameObjectsWithTag("KeyRespawnPosition");
-        }
+        //if (keySpawnPos == null || keySpawnPos.Length == 0)
+        //{
+        //    keySpawnPos = GameObject.FindGameObjectsWithTag("KeyRespawnPosition");
+        //}
     }
 
     /*
@@ -117,7 +124,8 @@ public class KeyPickup : MonoBehaviour
         // reactivate key
         transform.parent.gameObject.SetActive(true);
         // keySpawnPos is an array with one element where spawn position is
-        transform.parent.position = keySpawnPos[0].transform.position;
+        //transform.parent.position = keySpawnPos[0].transform.position;
+        transform.parent.position = keySpawnPos.transform.position;
 
         // place sound
         AudioSource.PlayClipAtPoint(placeSound, transform.position, 1.0F);

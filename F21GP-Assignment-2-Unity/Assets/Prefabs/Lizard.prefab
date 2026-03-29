@@ -2182,7 +2182,7 @@ MonoBehaviour:
   Player: {fileID: 0}
   areaName: 
   health: 5
-  roarSound: {fileID: 8300000, guid: 7b159dc40ff9a4285a3e3dad0776ddcc, type: 3}
+  biteSound: {fileID: 8300000, guid: 1269d0e512595104dae85a0c6833bf82, type: 3}
 --- !u!65 &8342967221888019876
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -23,7 +23,7 @@ public class TempleDoorOpen : MonoBehaviour
     private void OnDisable()
     {
         //KeyPickup.OnPickup -= setUnlockBool;
-        skullKey.GetComponentInChildren<KeyPickup>().OnPickup -= setUnlockBool;
+        //skullKey.GetComponentInChildren<KeyPickup>().OnPickup -= setUnlockBool;
     }
 
     void setUnlockBool()

@@ -10,7 +10,7 @@ to keep track of the time the player has to escape a temple.
 */
 public class Timer : MonoBehaviour
 {
-    [SerializeField] private float timeLimit = 60f;
+    public float timeLimit = 60f;
 
     public TextMeshProUGUI timeDisplay;
     private bool timerRunning = true;

@@ -81,8 +81,8 @@ public class LizardAI : MonoBehaviour
     private const float speedLow = 0.5F; // idle walking speed
 
     // sound effect vars
-    private bool roared = false; // only want to roar once
-    public AudioClip roarSound;
+    //private bool roared = false; // only want to roar once
+    public AudioClip biteSound;
 
     private void Awake()
     {
@@ -177,11 +177,11 @@ public class LizardAI : MonoBehaviour
             bite = true;
 
             // play roar sound effect
-            if (!roared)
-            {
-                AudioSource.PlayClipAtPoint(roarSound, transform.position, 1.0F);
-                roared = true;
-            }
+            //if (!roared)
+            //{
+            //    AudioSource.PlayClipAtPoint(roarSound, transform.position, 1.0F);
+            //    roared = true;
+            //}
 
             // cast a ray from the enemy forward direction and see if we hit the player
             RaycastHit rayQuery;
@@ -194,6 +194,9 @@ public class LizardAI : MonoBehaviour
                 {
                     readyToAttack = false; // prevent continuous attack
                     Invoke(nameof(ResetAttack), attackCooldown); // don't want the enemy attacking continuously, create cooldown to reset
+
+                    // play bite sound
+                    AudioSource.PlayClipAtPoint(biteSound, transform.position, 1.0F);
 
                     // reduce player health
                     rayQuery.transform.gameObject.GetComponent<PlayerControl>().health--;

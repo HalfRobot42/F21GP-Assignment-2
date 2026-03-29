@@ -279,7 +279,7 @@ public class CameraControl : MonoBehaviour
             {
                 if (lightLevel > 0) // only reduce if above 0
                 {
-                    lightLevel -= 1F * Time.deltaTime;
+                    lightLevel -= 2F * Time.deltaTime;
                 }
                 
             }

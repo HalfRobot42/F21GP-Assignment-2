@@ -1,26 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class RiddleScroll : MonoBehaviour
 {
-    public GameObject riddleUI;
-    // Start is called before the first frame update
-   private void OnTriggerEnter(Collider other)
+    public TMP_Text plinthUI;
+    public string plinthText;
+
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (riddleUI != null) riddleUI.SetActive(true);
+            plinthUI.text = plinthText;
+            plinthUI.gameObject.SetActive(true);
             
-         //Hide the "Press E" prompt
-            if (InteractionUI.Instance != null) InteractionUI.Instance.Hide();
+            //Hide the "Press E" prompt
+            //if (InteractionUI.Instance != null) InteractionUI.Instance.Hide();
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (riddleUI != null) riddleUI.SetActive(false);
+            plinthUI.gameObject.SetActive(false);
         }
     }
 }

@@ -8,14 +8,18 @@ public class DoorOpenAnimation : MonoBehaviour
     public AudioClip openSound;
     public GameObject doorCentre;
 
+    //public GameObject templeDoor;
+
     private void OnEnable()
     {
-        TempleDoorOpen.OnDoorOpen += animateDoorOpen;
+        //TempleDoorOpen.OnDoorOpen += animateDoorOpen;
+        GetComponentInChildren<TempleDoorOpen>().OnDoorOpen += animateDoorOpen;
     }
     
     private void OnDisable()
     {
-        TempleDoorOpen.OnDoorOpen -= animateDoorOpen;
+        //TempleDoorOpen.OnDoorOpen -= animateDoorOpen;
+        GetComponentInChildren<TempleDoorOpen>().OnDoorOpen -= animateDoorOpen;
     }
     void Awake()
     {

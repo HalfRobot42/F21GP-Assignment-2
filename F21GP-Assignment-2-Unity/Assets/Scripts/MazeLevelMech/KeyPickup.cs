@@ -6,7 +6,9 @@ using UnityEngine;
 public class KeyPickup : MonoBehaviour
 {
     // define key pickup event here
-    public static event Action OnPickup;
+    //public static event Action OnPickup;
+    public event Action OnPickup;
+
     //public GameObject[] keySpawnPos;
     public GameObject keySpawnPos;
 
@@ -18,20 +20,23 @@ public class KeyPickup : MonoBehaviour
     public AudioClip pickupSound;
     public AudioClip placeSound;
 
+    public GameObject templeDoor;
 
-    void Awake()
-    {
-        DontDestroyOnLoad(transform.parent.gameObject);
-    }
+
+    //void Awake()
+    //{
+    //    DontDestroyOnLoad(transform.parent.gameObject);
+    //}
 
     private void OnEnable()
     {
-        TempleDoorOpen.OnDoorOpen += placeKey;
+        //TempleDoorOpen.OnDoorOpen += placeKey;
+        templeDoor.GetComponentInChildren<TempleDoorOpen>().OnDoorOpen += placeKey;
     }
 
     private void OnDisable()
     {
-        TempleDoorOpen.OnDoorOpen += placeKey;
+        //TempleDoorOpen.OnDoorOpen += placeKey; 
     }
 
     void Start()

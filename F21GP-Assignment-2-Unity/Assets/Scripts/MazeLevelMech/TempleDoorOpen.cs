@@ -7,17 +7,23 @@ public class TempleDoorOpen : MonoBehaviour
 {
     private bool isOpen = false;
 
-    public static event Action OnDoorOpen;
-    
+    //public static event Action OnDoorOpen;
+    public event Action OnDoorOpen;
+
     private int triggerEnterCount = 0;
+
+    public GameObject skullKey;
+
     private void OnEnable()
     {
-        KeyPickup.OnPickup += setUnlockBool;
+        //KeyPickup.OnPickup += setUnlockBool;
+        skullKey.GetComponentInChildren<KeyPickup>().OnPickup += setUnlockBool;
     }
 
     private void OnDisable()
     {
-        KeyPickup.OnPickup -= setUnlockBool;
+        //KeyPickup.OnPickup -= setUnlockBool;
+        skullKey.GetComponentInChildren<KeyPickup>().OnPickup -= setUnlockBool;
     }
 
     void setUnlockBool()
